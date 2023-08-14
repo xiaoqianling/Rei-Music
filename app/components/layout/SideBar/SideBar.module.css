@@ -1,0 +1,63 @@
+.sideBar {
+    width: 200px;
+    height: 100vh;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    filter: brightness(150%);
+}
+.home {
+    font-weight: bold;
+    font-size: 24px;
+    height: 60px;
+    width: 100%;
+    text-align: center;
+    line-height: 60px;
+    color: white;
+}
+.sideBarGroup {
+    display: flex;
+    flex-direction: column;
+    margin-right: 20px;
+    margin-left: 20px;
+    margin-top: 30px;
+}
+.sideBarGroupTitle {
+    color: #7A7A7A;
+    font-size: 10px;
+    padding-left: 20px;
+    margin-bottom: 10px;
+}
+.sideBarGroupItem {
+    height: 30px;
+    border-radius: 5px;
+    color: white;
+    font-size: 13px;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    display: flex;
+    align-items: center;
+    padding-left: 10px;
+    cursor: pointer;
+}
+.sideBarGroupItem > div {
+    display: flex;
+}
+.sideBarGroupItem > div > span {
+    margin-left: 10px;
+}
+.sideBarGroup > *:first-child {
+    margin-top: 0;
+}
+.sideBarGroupItem[class*='active']{
+    background-color: #1ECD98;
+}
+.sideBarGroupItem:not([class*='active']):hover {
+    background-color: #2D2D2E;
+}
+
+.sideButton {
+    width: 10rem;
+    margin-right: 3rem;
+    margin-left: 3rem;
+}
