@@ -1,9 +1,9 @@
 import React, {useEffect, useRef, useState} from 'react';
 import style from './SideBar.module.css'
-import SideBarGroupTypes from "@/app/components/layout/SideBar/SideBarGroupProps";
+import SideBarGroupTypes from "@/components/layout/SideBar/SideBarGroupProps";
 import SideBarGroupItemProps = SideBarGroupTypes.SideBarGroupItemProps;
 import SideBarGroupProps = SideBarGroupTypes.SideBarGroupProps;
-import {type} from "os";
+import {notFound, useRouter} from "next/navigation";
 
 function SideBarGroup({title, children, onSwitch, groupIndex, selectedIndex}
                           : SideBarGroupProps) {
@@ -50,14 +50,22 @@ function SideBarGroup({title, children, onSwitch, groupIndex, selectedIndex}
     );
 }
 
-export function SideBarGroupItem({text, active, onClick, onCancel, onEnable, onToggle, icon, index}
+export function SideBarGroupItem({text, active, onClick, onCancel, onEnable, onToggle, icon, index, targetRoute}
                                      : SideBarGroupItemProps) {
+    let router = useRouter()
     const handleClick = () => {
         onToggle && onToggle(index)
         if (active)
             onCancel && onCancel(index)
-        else
+        else {
             onEnable && onEnable(index)
+            if (targetRoute !== undefined) {
+                router.push('/'+targetRoute);
+            } else {
+                console.log('404~')
+                notFound();
+            }
+        }
         onClick && onClick(index)
     }
     return <div className={`${style.sideBarGroupItem} ${active ? 'active' : ''}`} onClick={handleClick}>

@@ -6,10 +6,11 @@ function Main() {
     return <div className={style.cardContainer}>
         <div className={style.card}>
             <div className={style.card_introduction}>
-                <a href="#">Welcome to Rei Music</a>
+                <h1>Welcome to Rei Music</h1>
                 <h2>WX:xiaoxiaoqianling</h2>
-                <span>Rei Music是一个基于<a href="https://react.docschina.org/">React</a>和
-                    <a href="https://nextjs.org/">Next.js</a>的小前端项目，项目的<a href="">开源地址</a>，感谢支持！</span>
+                <span>Rei Music是一个基于<a href="https://react.docschina.org/" target='_blank'>React</a>和
+                    <a href="https://nextjs.org/" target='_blank'>Next.js</a>的小前端项目，项目的
+                    <a href="https://github.com/xiaoqianling/Rei-Music" target='_blank'>开源地址</a>，感谢支持！</span>
             </div>
             <div className={style.streamers}>
                 <div className={style.streamer} style={{'--i': 1, '--w': 1.5} as React.CSSProperties}>

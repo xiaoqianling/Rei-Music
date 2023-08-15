@@ -16,7 +16,8 @@ namespace SideBarGroupTypes {
         onEnable?: (number) => void,
         icon?: React.ReactNode,
         index?: number,
-        onToggle?: (number) => void
+        onToggle?: (number) => void,
+        targetRoute?: string,
     }
 }
 

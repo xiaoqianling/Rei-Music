@@ -19,7 +19,8 @@
 
 .card_introduction {
     position: absolute;
-    width: 200px;
+    /*position: relative;*/
+    width: 250px;
     height: 300px;
     left: 0;
     margin: 75px 50px;
@@ -29,7 +30,10 @@
     text-decoration: none;
     color: #5fdaf5;
     cursor: pointer;
-
+}
+.card_introduction h1 {
+    color: #5fdaf5;
+    margin: -5px auto;
 }
 .card_introduction h2 {
     transition: .5s 1s;
@@ -41,7 +45,7 @@
     transition: .5s 1s;
     color: #ffffff;
     font: 500 15px '';
-    position: absolute;
+    /*position: absolute;*/
     top: 70px;
 }
 

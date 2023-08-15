@@ -2,11 +2,13 @@
 import React from 'react';
 import {Left, MonitorTwo, Redo, Right} from "@icon-park/react";
 import style from './TopBar.module.css'
-import TopBarCustomer from "@/app/components/layout/TopBar/TopBarCustomer";
+import TopBarCustomer from "@/components/layout/TopBar/TopBarCustomer";
+import {useSelector} from "@/lib/redux/store";
+import {selectIndex} from "@/lib/redux/slices";
 
 function
 FlipPage({
-             showRefresh, children
+             showRefresh
          }: {
     showRefresh?: boolean, children?: React.ReactNode
 }) {
@@ -26,7 +28,8 @@ function SearchTab() {
     </div>;
 }
 
-export default function TopBar({showRefresh,}: { showRefresh?: boolean }) {
+export default function TopBar() {
+    const showRefresh : boolean =  useSelector(selectIndex)[0] === 0
     return (
         <div className={style.topBar}>
             <FlipPage showRefresh={showRefresh}/>

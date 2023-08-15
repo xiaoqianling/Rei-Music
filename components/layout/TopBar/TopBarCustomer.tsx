@@ -1,7 +1,7 @@
 import React from 'react';
 import style from './TopBar.module.css'
 
-function TopBarCustomer(props) {
+function TopBarCustomer() {
     return (
         <div className={style.customer}>
             <span>头像</span>
