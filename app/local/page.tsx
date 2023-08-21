@@ -3,7 +3,7 @@ import React from 'react';
 function Page() {
     return (
         <div>
-            Recommend Page
+            本地音乐 Page
         </div>
     );
 }

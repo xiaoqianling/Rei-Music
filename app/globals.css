@@ -5,5 +5,8 @@
 }
 html, body {
     height: 100%;
-    background-color: #242C63;
+    /*background-color: #242C63;*/
+    background-image: url('../public/bg.jpg');
+    background-size: cover;
+    background-position: center;
 }

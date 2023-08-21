@@ -2,10 +2,11 @@
 import React from 'react';
 import style from './SideBar.module.css'
 import SideBarGroup, {SideBarGroupItem} from "@/components/layout/SideBar/SideBarGroup";
-import {Computer, Like, MusicMenu, MusicOne, OvalLoveTwo, RadarThree, Time, Videocamera} from "@icon-park/react";
+import {Computer, Like, MusicMenu, Time} from "@icon-park/react";
 import {useDispatch, useSelector} from "@/lib/redux/store";
 import {selectIndex, sidebarSlice} from "@/lib/redux/slices";
 import {useRouter, usePathname} from "next/navigation";
+import {Icon, Music, Radar, Recommend, Video} from "@/components/icons/homeIcons";
 
 function SideBar() {
     const router = useRouter();
@@ -25,16 +26,20 @@ function SideBar() {
 
     return (<div>
         <div className={style.sideBar}>
-            <div className={style.home}><span  onClick={handleBackHome}>Rei Music</span></div>
+            <div className={style.home}>
+                <span onClick={handleBackHome}>
+                    <Icon size={40}/>Rei Music
+                </span>
+            </div>
             <SideBarGroup title={"在线音乐"} selectedIndex={index}
                           groupIndex={0} onSwitch={switchIndex}>
-                <SideBarGroupItem text={'推荐'} icon={<OvalLoveTwo theme="outline" size="18" fill="white"/>}
+                <SideBarGroupItem text={'推荐'} icon={<Recommend size={24} color='white'/>}
                                   targetRoute='recommend'/>
-                <SideBarGroupItem text={'音乐馆'} icon={<MusicOne theme="outline" size="18" fill="white"/>}
+                <SideBarGroupItem text={'音乐馆'} icon={<Music size={22} borderSize={24} color='white'/>}
                                   targetRoute='music'/>
-                <SideBarGroupItem text={'视频'} icon={<Videocamera theme="outline" size="18" fill="white"/>}
+                <SideBarGroupItem text={'视频'} icon={<Video size={24} color='white'/>}
                                   targetRoute='vedio'/>
-                <SideBarGroupItem text={'雷达'} icon={<RadarThree theme="outline" size="18" fill="white"/>}
+                <SideBarGroupItem text={'雷达'} icon={<Radar size={20} borderSize={24} color='white'/>}
                                   targetRoute='radar'/>
             </SideBarGroup>
             <SideBarGroup title={"我的音乐"} selectedIndex={index}

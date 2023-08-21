@@ -8,25 +8,23 @@
 .flipPage {
     display: flex;
     align-items: center;
-    margin-left: 44px;
+    margin-left: 40px;
 }
-.flipPage > div {
-    display: flex;
-    align-items: flex-end;
+.flipPage > span {
+    flex: 1;
+    margin-left: 5px;
 }
-.flipPage > div > span {
-    cursor: pointer;
+.flipPage > span:first-child {
+    margin-left: 0;
 }
-.flipPage > div > span:nth-child(2) {
-    margin: auto 15px;
-}
-.flipPage > div > span:nth-child(3) {
-    margin-right: 10px;
-}
+
 .searchTab {
     display: flex;
     padding-left: 5px;
     align-items: center;
+}
+.searchTab>span{
+    cursor: pointer;
 }
 .searchTabInput {
     background-color: #393F70;

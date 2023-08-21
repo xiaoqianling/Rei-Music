@@ -53,6 +53,7 @@ function SideBarGroup({title, children, onSwitch, groupIndex, selectedIndex}
 export function SideBarGroupItem({text, active, onClick, onCancel, onEnable, onToggle, icon, index, targetRoute}
                                      : SideBarGroupItemProps) {
     let router = useRouter()
+
     const handleClick = () => {
         onToggle && onToggle(index)
         if (active)
@@ -60,7 +61,7 @@ export function SideBarGroupItem({text, active, onClick, onCancel, onEnable, onT
         else {
             onEnable && onEnable(index)
             if (targetRoute !== undefined) {
-                router.push('/'+targetRoute);
+                router.push('/' + targetRoute);
             } else {
                 console.log('404~')
                 notFound();
@@ -69,10 +70,7 @@ export function SideBarGroupItem({text, active, onClick, onCancel, onEnable, onT
         onClick && onClick(index)
     }
     return <div className={`${style.sideBarGroupItem} ${active ? 'active' : ''}`} onClick={handleClick}>
-        <div>
-            <div>{icon}</div>
-            <span>{text}</span>
-        </div>
+        {icon}{text}
     </div>
 }
 

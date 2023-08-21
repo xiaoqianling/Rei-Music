@@ -4,8 +4,10 @@
     position: relative;
     display: flex;
     flex-direction: column;
-    filter: brightness(150%);
+    /*filter: brightness(150%);*/
+    backdrop-filter: blur(3px);
 }
+
 .home {
     font-weight: bold;
     font-size: 24px;
@@ -15,10 +17,19 @@
     line-height: 60px;
     color: white;
 }
-.home > span {
 
+.home > span {
     cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex: 1;
 }
+
+.home > span > span:first-child {
+    margin-right: 10px;
+}
+
 .sideBarGroup {
     display: flex;
     flex-direction: column;
@@ -26,12 +37,14 @@
     margin-left: 20px;
     margin-top: 30px;
 }
+
 .sideBarGroupTitle {
     color: #7A7A7A;
     font-size: 10px;
     padding-left: 20px;
     margin-bottom: 10px;
 }
+
 .sideBarGroupItem {
     height: 30px;
     border-radius: 5px;
@@ -41,21 +54,21 @@
     margin-bottom: 5px;
     display: flex;
     align-items: center;
-    padding-left: 10px;
+    padding-left: 16px;
     cursor: pointer;
 }
-.sideBarGroupItem > div {
-    display: flex;
+.sideBarGroupItem > span:first-child {
+    margin-right: 5px;
 }
-.sideBarGroupItem > div > span {
-    margin-left: 10px;
-}
+
 .sideBarGroup > *:first-child {
     margin-top: 0;
 }
-.sideBarGroupItem[class*='active']{
+
+.sideBarGroupItem[class*='active'] {
     background-color: #1ECD98;
 }
+
 .sideBarGroupItem:not([class*='active']):hover {
     background-color: #2D2D2E;
 }
