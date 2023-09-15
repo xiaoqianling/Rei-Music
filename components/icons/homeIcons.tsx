@@ -1,5 +1,6 @@
 import React from 'react'
 import HomeIcons from "@/components/icons/homeIconsProps";
+import {theme} from "antd";
 
 
 function IconContainer({children, className, size}: { children: React.ReactNode, className?: string, size?: number }) {
@@ -16,7 +17,7 @@ function IconContainer({children, className, size}: { children: React.ReactNode,
     </span>
 }
 
-export function ListenSong({size, className, borderSize}: HomeIcons.BaseProps) {
+export function ListenSong({size = 20, className, borderSize}: HomeIcons.BaseProps) {
     return (
         <IconContainer className={className} size={borderSize}>
             <svg className={className} d="1692524681636" viewBox={`0 0 1024 1024`} version="1.1"
@@ -35,7 +36,7 @@ export function ListenSong({size, className, borderSize}: HomeIcons.BaseProps) {
     );
 }
 
-export function Left({size, className, color, borderSize}: HomeIcons.BaseProps) {
+export function Left({size = 20, className, color, borderSize}: HomeIcons.BaseProps) {
     return <IconContainer className={className} size={borderSize}>
         <svg d="1692529201798" className="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg"
              p-id="2791" width={size} height={size}>
@@ -46,7 +47,7 @@ export function Left({size, className, color, borderSize}: HomeIcons.BaseProps) 
     </IconContainer>
 }
 
-export function Right({size, className, color, borderSize}: HomeIcons.BaseProps) {
+export function Right({size = 20, className, color, borderSize}: HomeIcons.BaseProps) {
     return <IconContainer className={className} size={borderSize}>
         <svg d="1692529576690" className="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg"
              p-id="8051" width={size} height={size}>
@@ -57,7 +58,7 @@ export function Right({size, className, color, borderSize}: HomeIcons.BaseProps)
     </IconContainer>
 }
 
-export function Refresh({size, className, color, borderSize}: HomeIcons.BaseProps) {
+export function Refresh({size = 20, className, color, borderSize}: HomeIcons.BaseProps) {
     return <IconContainer className={className} size={borderSize}>
         <svg d="1692530936543" className="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg"
              p-id="12374" width={size} height={size}>
@@ -68,7 +69,7 @@ export function Refresh({size, className, color, borderSize}: HomeIcons.BaseProp
     </IconContainer>
 }
 
-export function Icon({size, className, borderSize}: HomeIcons.BaseProps) {
+export function Icon({size = 20, className, borderSize}: HomeIcons.BaseProps) {
     return <IconContainer className={className} size={borderSize}>
         <svg d="1692543986313" className="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg"
              p-id="6451" width={size} height={size}>
@@ -89,7 +90,10 @@ export function Icon({size, className, borderSize}: HomeIcons.BaseProps) {
     </IconContainer>
 }
 
-export function Recommend({size, className, borderSize, color}: HomeIcons.BaseProps) {
+export function Recommend({size = 20, className, borderSize, color}: HomeIcons.BaseProps) {
+    if (!color) {
+        color = theme.useToken().token.colorTextBase;
+    }
     return <IconContainer className={className} size={borderSize}>
         <svg d="1692546113933" className="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg"
              p-id="18231" width={size} height={size}>
@@ -103,7 +107,10 @@ export function Recommend({size, className, borderSize, color}: HomeIcons.BasePr
     </IconContainer>
 }
 
-export function Music({size, className, borderSize, color}: HomeIcons.BaseProps) {
+export function Music({size = 20, className, borderSize, color}: HomeIcons.BaseProps) {
+    if (!color) {
+        color = theme.useToken().token.colorTextBase;
+    }
     return <IconContainer className={className} size={borderSize}>
         <svg d="1692546773664" className="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg"
              p-id="25681" width={size} height={size}>
@@ -114,7 +121,10 @@ export function Music({size, className, borderSize, color}: HomeIcons.BaseProps)
     </IconContainer>
 }
 
-export function Video({size, className, borderSize, color}: HomeIcons.BaseProps) {
+export function Video({size = 20, className, borderSize, color}: HomeIcons.BaseProps) {
+    if (!color) {
+        color = theme.useToken().token.colorTextBase;
+    }
     return <IconContainer className={className} size={borderSize}>
         <svg d="1692547397543" className="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg"
              p-id="30163" width={size} height={size}>
@@ -130,7 +140,10 @@ export function Video({size, className, borderSize, color}: HomeIcons.BaseProps)
     </IconContainer>
 }
 
-export function Radar({size, className, borderSize, color}: HomeIcons.BaseProps) {
+export function Radar({size = 20, className, borderSize, color}: HomeIcons.BaseProps) {
+    if (!color) {
+        color = theme.useToken().token.colorTextBase;
+    }
     return <IconContainer className={className} size={borderSize}>
         <svg d="1692547587000" className="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg"
              p-id="33088" width={size} height={size}>
@@ -142,6 +155,80 @@ export function Radar({size, className, borderSize, color}: HomeIcons.BaseProps)
             <path
                 d="M819.2 512a307.2 307.2 0 1 0-464.896 263.168l51.2-88.064a204.8 204.8 0 1 1 209.92 0l51.2 88.064A307.2 307.2 0 0 0 819.2 512z"
                 fill={color ? color : '#000'} p-id="33091"></path>
+        </svg>
+    </IconContainer>
+}
+
+export function Like({size = 20, className, borderSize, color}: HomeIcons.BaseProps) {
+    if (!color) {
+        color = theme.useToken().token.colorTextBase;
+    }
+    return <IconContainer className={className} size={borderSize}>
+        <svg d="1692768715104" className="icon" viewBox="0 0 1126 1024" version="1.1" xmlns="http://www.w3.org/2000/svg"
+             p-id="13694" width={size} height={size}>
+            <path
+                d="M93.2352 552.6528A332.8 332.8 0 0 1 472.7808 28.3648h-0.1024L255.488 245.6576l72.3968 72.3968 217.1904-217.1904a332.8 332.8 0 0 1 470.6816 470.6304L563.2 1024l-470.6304-470.6304 0.6656-0.7168z"
+                fill={color ? color : '#000'} p-id="13695"></path>
+        </svg>
+    </IconContainer>
+}
+
+export function Computer({size = 20, className, borderSize, color}: HomeIcons.BaseProps) {
+    if (!color) {
+        color = theme.useToken().token.colorTextBase;
+    }
+    return <IconContainer className={className} size={borderSize}>
+        <svg d="1692769017348" className="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg"
+             p-id="18130" width={size} height={size}>
+            <path d="M471.04 727.04h81.92v184.32h-81.92z" p-id="18131" fill={color ? color : '#000'}></path>
+            <path
+                d="M307.2 911.36m30.72 0l348.16 0q30.72 0 30.72 30.72l0 0q0 30.72-30.72 30.72l-348.16 0q-30.72 0-30.72-30.72l0 0q0-30.72 30.72-30.72Z"
+                p-id="18132" fill={color ? color : '#000'}></path>
+            <path
+                d="M20.48 51.2m51.2 0l880.64 0q51.2 0 51.2 51.2l0 573.44q0 51.2-51.2 51.2l-880.64 0q-51.2 0-51.2-51.2l0-573.44q0-51.2 51.2-51.2Z"
+                p-id="18133" fill={color ? color : '#000'}></path>
+        </svg>
+    </IconContainer>
+}
+
+export function Clock({size = 20, className, borderSize, color}: HomeIcons.BaseProps) {
+    if (!color) {
+        color = theme.useToken().token.colorTextBase;
+    }
+    return <IconContainer className={className} size={borderSize}>
+        <svg d="1692769283623" className="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg"
+             p-id="20321" width={size} height={size}>
+            <path
+                d="M503.1 107.1c-218.8 0-396 177.3-396 396 0 218.8 177.3 396.1 396 396.1s396-177.3 396-396.1c0-218.7-177.4-396-396-396zM470 532.4V206.1h66v300.3l148.7 148.7-46.2 46.3L470 536.2v-3.3"
+                fill={color ? color : '#000'} p-id="20322"></path>
+        </svg>
+    </IconContainer>
+}
+
+export function MusicList({size = 20, className, borderSize, color}: HomeIcons.BaseProps) {
+    if (!color) {
+        color = theme.useToken().token.colorTextBase;
+    }
+    return <IconContainer className={className} size={borderSize}>
+        <svg d="1692781377948" className="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg"
+             p-id="22840" width={size} height={size}>
+            <path
+                d="M838.99432863 162.40722482l-186.33127437 38.02037807c-13.51137403 2.82796201-23.25213204 14.61113702-23.25213205 28.43672906v412.09690783c0 23.09502305-15.86800901 43.20497508-38.49170507 48.54668107L534.04575904 702.86218588c-34.24976206 8.01255901-61.27251012 37.39194207-61.42961915 72.58435814-0.31421799 48.07535409 44.30473808 83.58198817 90.96611119 72.74146715l29.85071007-6.91279599c48.70379009-11.31184801 83.26777017-53.73127811 85.62440516-103.22061322h0.47132701v-372.34833075c0-10.84052103 7.69834101-20.26706103 18.38175304-22.46658704l150.35331329-30.63625506c10.84052103-2.19952601 18.69597103-11.78317502 18.69597104-22.93791404v-104.47748521c0.15710901-14.76824603-13.35426503-25.76587604-27.96540206-22.78080504zM166.72491631 255.88708001h375.96183773v33.14999904H166.72491631zM166.72491631 387.38731327h375.96183773v33.14999905H166.72491631z"
+                fill={color ? color : '#000'} p-id="22841"></path>
+            <path
+                d="M166.72491631 518.88754654h375.96183773V552.03754558H166.72491631zM166.72491631 650.3877798h202.98482839v33.14999904H166.72491631z"
+                fill={color ? color : '#000'} p-id="22842"></path>
+        </svg>
+    </IconContainer>
+}
+
+export function PlayMusic({size = 20, className, borderSize, color}: HomeIcons.BaseProps) {
+    return <IconContainer className={className} size={borderSize}>
+        <svg d="1692870086754" className="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg"
+             p-id="5635" width={size} height={size}>
+            <path
+                d="M224 938.713333a53.58 53.58 0 0 1-53.333333-53.433333V138.72a53.333333 53.333333 0 0 1 80.886666-45.666667l618.666667 373.28a53.333333 53.333333 0 0 1 0 91.333334l-618.666667 373.28a53.16 53.16 0 0 1-27.553333 7.766666z m0.046667-810.666666a10.98 10.98 0 0 0-5.333334 1.42 10.466667 10.466667 0 0 0-5.38 9.253333v746.56a10.666667 10.666667 0 0 0 16.18 9.133333l618.666667-373.28a10.666667 10.666667 0 0 0 0-18.266666l-618.666667-373.28a10.386667 10.386667 0 0 0-5.446666-1.586667z"
+                fill={color ? color : 'red'} p-id="5636" stroke='blue'></path>
         </svg>
     </IconContainer>
 }

@@ -3,7 +3,7 @@ import React from 'react';
 function Page() {
     return (
         <div>
-            Recommend Page
+            分页内容区
         </div>
     );
 }

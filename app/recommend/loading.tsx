@@ -1,10 +1,9 @@
 import React from 'react';
+import {Skeleton} from "antd";
 
 function Loading() {
     return (
-        <div>
-            推荐页面还在加载
-        </div>
+        <Skeleton active/>
     );
 }
 
