@@ -1,7 +1,7 @@
 // 管理所有的reducer
 
-import {sidebarSlice} from "@/lib/redux/slices/sidebarSlice/sidebarSlice";
+import {themeSlice} from "@/lib/redux/slices/themeSlice/themeSlice";
 
 export const reducer = {
-    sidebar: sidebarSlice.reducer,
+    theme: themeSlice.reducer
 }

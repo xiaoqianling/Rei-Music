@@ -1,7 +1,6 @@
 'use client'
 import React from "react";
 import style from './Card.module.css'
-import {PlayOne} from "@icon-park/react";
 import Image from "next/image";
 import {PlayMusic} from "@/components/icons/homeIcons";
 

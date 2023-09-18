@@ -1,11 +1,13 @@
-import React, {useState} from 'react';
-import {Avatar, Button, Menu, MenuProps, Switch, Typography} from "antd";
+import React, {useRef, useState} from 'react';
+import {Avatar, Button, Menu, MenuProps, Select, Switch, Typography} from "antd";
 import Image from "next/image";
 import useTheme from "antd/es/config-provider/hooks/useTheme";
 import {SettingOutlined} from "@ant-design/icons";
+import {themeItems} from "@/config/themeConfig";
+import {useDispatch} from "@/lib/redux/store";
+import {themeSlice} from "@/lib/redux/slices/themeSlice";
 
 function TopBarCustomer() {
-
 
     return (
         <>
@@ -13,8 +15,6 @@ function TopBarCustomer() {
             <Typography.Text>千灵</Typography.Text>
             <span>打钱</span>
             <span>↓</span>
-            <Typography.Text>主题</Typography.Text>
-            {/*todo 主题切换*/}
             <App/>
             <Typography.Text>更多功能</Typography.Text>
         </>
@@ -23,49 +23,21 @@ function TopBarCustomer() {
 
 export default TopBarCustomer;
 
-const items: MenuProps['items'] = [{
-    label: 'Navigation Three - Submenu',
-    key: 'SubMenu',
-    icon: <SettingOutlined/>,
-    children: [
-        {
-            type: 'group',
-            label: 'Item 1',
-            children: [
-                {
-                    label: 'Option 1',
-                    key: 'setting:1',
-                },
-                {
-                    label: 'Option 2',
-                    key: 'setting:2',
-                },
-            ],
-        },
-        {
-            type: 'group',
-            label: 'Item 2',
-            children: [
-                {
-                    label: 'Option 3',
-                    key: 'setting:3',
-                },
-                {
-                    label: 'Option 4',
-                    key: 'setting:4',
-                },
-            ],
-        },
-    ],
-},]
 
-const App: React.FC = () => {
-  const [current, setCurrent] = useState('mail');
+function App() {
+    const dispatch = useDispatch()
+    const handleChange = (value: string) => {
+        console.log(`selected ${value}`);
+        dispatch(themeSlice.actions.indexUpdate(value))
+    };
 
-  const onClick: MenuProps['onClick'] = (e) => {
-    console.log('click ', e);
-    setCurrent(e.key);
-  };
 
-  return <Menu style={{width:'200px'}} onClick={onClick} selectedKeys={[current]} mode="vertical" items={items} />;
-};
+    return (
+        <Select
+            defaultValue="主题设置"
+            style={{width: 120}}
+            onChange={handleChange}
+            options={themeItems}
+        />
+    );
+}
