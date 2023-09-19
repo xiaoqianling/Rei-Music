@@ -1,48 +1,72 @@
 'use client'
 import {Howl, Howler} from 'howler';
-import React, {useRef, useState} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import {Button} from "antd";
+import {ponyfillGlobal} from "@mui/utils";
+import {set} from "immutable";
 
 function Page() {
     const [isPlaying, setIsPlaying] = useState(false);
     const [id, setID] = useState(-1);
-    const [sound, setSound] = useState(new Howl({
-        src: '/music/TruE - 黄龄,HOYO-MiX.flac', html5: true, volume: 0.03,
-        onplay: (soundId) => {
-            console.log('开始播放')
-            setIsPlaying(true)
-            if (id !== -1) {
-                console.log('移除:', id)
+    const [animationID, setAnimationID] = useState<number>();
+    const [currentTime, setCurrentTime] = useState(0)
+    const soundRef = useRef<Howl>(null!);
+    const animationRef = useRef<number>(null!);
+
+    useEffect(() => {
+        const sound = new Howl({
+            src: '/music/TruE - 黄龄,HOYO-MiX.flac',
+            volume:0.03,
+            onplay: (soundId) => {
+                setIsPlaying(true);
+                setID(soundId)
+                animationRef.current = requestAnimationFrame(updateTime);
+            },
+            onpause: () => {
+                setIsPlaying(false);
+                cancelAnimationFrame(animationRef.current);
+            },
+            onend: () => {
+                setIsPlaying(false);
+                setCurrentTime(0);
+                cancelAnimationFrame(animationRef.current);
+            },
+            onstop: (soundId)=>{
+                setIsPlaying(false)
+                setCurrentTime(0)
+                cancelAnimationFrame(animationRef.current)
             }
-            console.log('添加:', soundId)
-            setID(soundId)
-        },
-        onload: (soundId) => {
-            console.log('加载完成', soundId)
-        },
-        onpause: (soundId) => {
-            console.log(soundId, '已暂停')
-        },
-        onstop: (soundId) => {
-            console.log(soundId, '已停止')
-        }
-    }))
-    console.log('duration:', sound.duration(id))
+        });
+        soundRef.current = sound;
+        return () => {
+            sound.stop();
+        };
+    }, []);
+
+    const updateTime = () => {
+        setCurrentTime(soundRef.current.seek());
+        animationRef.current = requestAnimationFrame(updateTime);
+    };
 
     return (
         <div>
+            {timeConvert(currentTime)} -- {timeConvert(soundRef.current?.duration())}
             {isPlaying ? '正在播放' : '已暂停'}
             <Button onClick={() => {
-                sound.play()
+                soundRef.current.play(id===-1?undefined:id)
             }} type={"primary"}>播放</Button>
             <Button onClick={() => {
-                sound.pause(id)
+                soundRef.current.pause(id)
             }} type={"primary"}>暂停</Button>
             <Button onClick={() => {
-                sound.stop(id)
+                soundRef.current.stop(id)
             }} type={"primary"}>停止</Button>
         </div>
     );
+}
+
+function timeConvert(time: number): string {
+    return Math.floor(time / 60) + ':' + (time % 60 < 10 ? '0' : '') + Math.round(time % 60)
 }
 
 export default Page;
