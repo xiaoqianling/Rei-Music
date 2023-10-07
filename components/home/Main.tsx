@@ -10,8 +10,9 @@ function Main() {
             <div className={style.card_introduction}>
                 <h1>Welcome to Rei Music</h1>
                 <h2>WX:xiaoxiaoqianling</h2>
-                <span>Rei Music是一个基于<a href="https://react.docschina.org/" target='_blank'>React</a>和
-                    <a href="https://nextjs.org/" target='_blank'>Next.js</a>的小前端项目，项目的
+                <span>Rei Music是一个基于<a href="https://react.dev//" target='_blank'>React</a>&
+                    <a href="https://nextjs.org/" target='_blank'>Next.js</a>&
+                    <a href="https://ant-design.antgroup.com/index-cn" target='_blank'>Ant Design</a>，项目的
                     <a href="https://github.com/xiaoqianling/Rei-Music" target='_blank'>开源地址</a>，感谢支持！</span>
             </div>
             <div className={style.streamers}>

@@ -32,6 +32,7 @@ const audioReducer = (state = initialState, action) => {
 export default audioReducer;
 ```
 接下来，在你的根Reducer中将`audioReducer`添加到合并的Reducers中。然后，在你的播放器组件中，你需要使用`useSelector`和`useDispatch`钩子来获取和分发Redux状态和操作。修改你的播放器组件代码如下：
+
 ```jsx
 import React, { useEffect, useRef } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
@@ -40,8 +41,10 @@ import { play, pause, setCurrentTime } from './path_to_audio_module/audio';
 const Player = () => {  const isPlaying = useSelector(state => state.audio.isPlaying);  
     const currentTime = useSelector(state => state.audio.currentTime);  
     const playlist = useSelector(state => state.audio.playlist);  
-    const dispatch = useDispatch();  const soundRef = useRef(null);  
-    const animationRef = useRef(null);  useEffect(() => {    
+    const dispatch = useDispatch();  
+    const soundRef = useRef(null);  
+    const animationRef = useRef(null);  
+    useEffect(() => {    
         const sound = new Howl({      
             src: playlist.map(song => song.url),      
             onplay: () => {        
@@ -57,10 +60,11 @@ const Player = () => {  const isPlaying = useSelector(state => state.audio.isPla
                 dispatch(setCurrentTime(0));        
                 cancelAnimationFrame(animationRef.current);      
                 },   
-        });    soundRef.current = sound;   
-        return () => {      sound.stop();    };  
-        }, 
-        [dispatch, playlist]);  
+        });    
+        soundRef.current = sound;   
+        return () => {      
+            sound.stop();    };  
+        }, [dispatch, playlist]);  
     const playSong = () => {    
         soundRef.current.play();  
     };  

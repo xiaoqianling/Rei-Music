@@ -147,7 +147,7 @@ function MusicBar() {
                     <MusicInfo name={songInfo?.name ?? '未知'} singer={songInfo?.singer ?? '未知歌手'}/>
                 </div>
                 <MusicOperation isPlaying={isPlaying} onPlay={playMusic} onPause={pauseMusic} onNext={nextMusic}
-                                onPrev={prevMusic} disabled={false}/>
+                                onPrev={prevMusic} disabled={audioRef.current?.state() !== 'loaded'}/>
                 <MusicBarRight currentTime={currentTime} duration={audioRef.current?.duration()} playlist={playlist}/>
             </div>
         </div>

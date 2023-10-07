@@ -10,24 +10,6 @@ import {Word, WordType} from "@/app/about/Word";
 import React from "react";
 import Network from "@/app/about/Network";
 
-
-
-export async function generateStaticParam() {
-    console.log("generateStaticParam")
-    return [{id: '1'}, {id: '2'}]
-}
-
-async function Text({params}: { params: any }): Promise<React.JSX.Element> {
-    const res: Response = await fetch('https://api.wrdan.com/hitokoto', {cache: 'no-store'});
-    const word: WordType = await res.json();
-    console.log('params:', params)
-    return <>
-        {word.text} <br/>
-        {word.source} <br/>
-        {word.author}
-    </>
-}
-
 function About() {
 
     return (
@@ -35,7 +17,6 @@ function About() {
             <div style={{color: 'white'}}>
                 Hi <br/>
                 <Word/>
-                {/*<Text/>*/}
                 <Network/>
             </div>
         </div>

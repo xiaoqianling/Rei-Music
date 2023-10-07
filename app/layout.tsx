@@ -1,11 +1,8 @@
 import './global.css'
 import type {Metadata} from 'next'
 import React, {StrictMode} from "react";
-import {Providers, ReduxProvider} from "@/app/providers";
-import {Inter} from 'next/font/google'
-import Head from "next/head";
+import {ReduxProvider} from "@/app/providers";
 
-const inter = Inter({subsets: ['latin']})
 
 export const metadata: Metadata = {
     title: 'Rei Music',
@@ -21,9 +18,11 @@ export default function RootLayout({
     children: React.ReactNode
 }) {
 
+
+
     return (
         <html lang="zh">
-        <body className={inter.className}>
+        <body>
         <StrictMode>
                 <ReduxProvider>
                     {children}
