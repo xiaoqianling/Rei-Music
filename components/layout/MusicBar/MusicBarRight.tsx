@@ -1,12 +1,11 @@
 import React, {useState} from "react";
-import {timeConvert} from "@/components/layout/MusicBar/MusicBar";
 import {MusicList} from "@/components/icons/homeIcons";
 import {Song} from "@/lib/types/song";
 import {Drawer} from "antd";
 
 export function MusicBarRight({currentTime, duration, playlist}: {
-    currentTime: number,
-    duration: number,
+    currentTime?: number,
+    duration?: number,
     playlist: Song[] | undefined
 }) {
     const [openDrawer, setOpenDrawer] = useState(false)
@@ -18,11 +17,11 @@ export function MusicBarRight({currentTime, duration, playlist}: {
         setOpenDrawer(false)
     }
 
-    return <div style={{width: '200px', display: "flex", flexFlow:"row", justifyContent:"space-around"}}>
+    return <div style={{width: '200px', display: "flex", flexFlow: "row", justifyContent: "space-around"}}>
         <span>
-        {timeConvert(currentTime)} -- {timeConvert(duration)}
+        {currentTime ? timeConvert(currentTime) : ''} -- {duration ? timeConvert(duration) : ''}
         </span>
-        <span style={{display: "flex", flexFlow:"row"}} onClick={showDrawer}>
+        <span style={{display: "flex", flexFlow: "row"}} onClick={showDrawer}>
             <MusicList/>
             {playlist?.length ?? 0}
         </span>
@@ -30,4 +29,12 @@ export function MusicBarRight({currentTime, duration, playlist}: {
             列表
         </Drawer>
     </div>;
+}
+
+export function timeConvert(time: number): string {
+    let minute = Math.floor(time / 60)
+    const second = Math.round(time) % 60
+    if (second === 0 && time > 59)
+        minute++
+    return (minute < 10 ? '0' : '') + minute + ':' + (second < 10 ? '0' : '') + second
 }

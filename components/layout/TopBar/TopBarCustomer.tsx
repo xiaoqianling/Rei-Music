@@ -1,12 +1,9 @@
-import React, {useRef, useState} from 'react';
-import {Avatar, Button, Menu, MenuProps, Select, Switch, Typography} from "antd";
+import React from 'react';
+import {Button, Dropdown, MenuProps, Space, Typography} from "antd";
 import Image from "next/image";
-import useTheme from "antd/es/config-provider/hooks/useTheme";
-import {SettingOutlined} from "@ant-design/icons";
-import {themeItems} from "@/config/themeConfig";
-import {useDispatch} from "@/lib/redux/store";
-import {themeSlice} from "@/lib/redux/slices/themeSlice";
-
+import {useDispatch, useSelector} from "@/lib/redux/store";
+import {themeChangeByValue} from "@/lib/redux/slices/themeSlice";
+import {DownOutlined} from "@ant-design/icons";
 function TopBarCustomer() {
 
     return (
@@ -15,7 +12,7 @@ function TopBarCustomer() {
             <Typography.Text>千灵</Typography.Text>
             <span>打钱</span>
             <span>↓</span>
-            <App/>
+            <ThemeSelector/>
             <Typography.Text>更多功能</Typography.Text>
         </>
     );
@@ -24,20 +21,35 @@ function TopBarCustomer() {
 export default TopBarCustomer;
 
 
-function App() {
+function ThemeSelector() {
     const dispatch = useDispatch()
-    const handleChange = (value: string) => {
-        console.log(`selected ${value}`);
-        dispatch(themeSlice.actions.indexUpdate(value))
+    const themeName = useSelector(state => state.theme.themeName)
+
+    const items: MenuProps["items"] = [{
+        label: '默认主题',
+        key: 'default',
+
+    }, {
+        label: '桃花主题',
+        key: 'sakura'
+    }]
+
+    const handleChangeTheme: MenuProps['onClick'] = (info) => {
+        dispatch(themeChangeByValue(info.key))
+    }
+
+    const menuProps = {
+        items: items,
+        onClick: handleChangeTheme
     };
-
-
     return (
-        <Select
-            defaultValue="主题设置"
-            style={{width: 120}}
-            onChange={handleChange}
-            options={themeItems}
-        />
+        <Dropdown menu={menuProps}>
+            <Button>
+                <Space>
+                    {themeName}
+                    <DownOutlined/>
+                </Space>
+            </Button>
+        </Dropdown>
     );
 }

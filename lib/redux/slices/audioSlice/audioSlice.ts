@@ -1,23 +1,39 @@
-import {createSlice, PayloadAction} from "@reduxjs/toolkit";
-import {Song, localSong, serverSong} from "@/lib/types/song";
+import {createAsyncThunk, createSlice, PayloadAction} from "@reduxjs/toolkit";
+import {Song, serverSong} from "@/lib/types/song";
+import axios from "axios";
+
+export enum AudioStatus {
+    IDLE,
+    LOADING,
+    SUCCEED,
+    FAILED
+}
 
 export interface AudioData {
     isPlaying: boolean,
-    currentTime: number,
     playlist: Song[],
     currentIndex: number,
     songID: number,
-    song: Howl | undefined
+    song: Howl | undefined,
+    status: AudioStatus,
+    error?: string
 }
 
 const initialState: AudioData = {
     isPlaying: false,
-    currentTime: 0,
     playlist: serverSong,
-    songID: 0,
+    songID: 1,
     currentIndex: 0,
-    song: undefined
+    song: undefined,
+    status: AudioStatus.IDLE,
 }
+
+export const fetchMetadata = createAsyncThunk<Song[]>("audio/fetchMetadata",
+    async () => {
+        const response = await axios.get('http://localhost:8080/api/music/search/allsongs')
+        return response.data
+    })
+
 export const audioSlice = createSlice({
     name: 'audio',
     initialState,
@@ -28,9 +44,6 @@ export const audioSlice = createSlice({
         },
         pause: (state) => {
             state.isPlaying = false;
-        },
-        setCurrentTime: (state, action: PayloadAction<number>) => {
-            state.currentTime = action.payload
         },
         /**
          * 播放指定id的歌曲
@@ -52,13 +65,31 @@ export const audioSlice = createSlice({
             console.log("当前index", state.currentIndex)
             state.songID = state.playlist[state.currentIndex].id
         }
+    },
+    extraReducers: (builder) => {
+        builder
+            .addCase(fetchMetadata.pending, (state) => {
+                state.status = AudioStatus.LOADING
+            })
+            .addCase(fetchMetadata.fulfilled, (state, action) => {
+                state.status = AudioStatus.SUCCEED
+                const idList = state.playlist.map(song => song.id)
+                state.playlist = state.playlist.concat(action.payload.filter(song => !(idList.includes(song.id)))
+                    .map(song => {
+                        song.url = "http://localhost:8080/api/music/file/" + song.filename
+                        return song
+                    }))
+            })
+            .addCase(fetchMetadata.rejected, (state, action) => {
+                state.status = AudioStatus.FAILED
+                state.error = action.error.message
+            })
     }
 })
 
 export const {
     play,
     pause,
-    setCurrentTime,
     playNextSong,
     playPrevSong,
     cutSongByID

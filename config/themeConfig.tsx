@@ -161,3 +161,6 @@ export const themeItems: DefaultOptionType[] = [
 ]
 export const themeMap = new Map<string, ThemeConfig>([
     ['default', defaultTheme], ['sakura', sakuraTheme]])
+export const themeNameMap = new Map<string, string>([
+    ['default', '默认主题'], ['sakura', '桃花主题']
+])

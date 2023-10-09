@@ -3,16 +3,15 @@
 import React, {useEffect, useState} from "react";
 import {Provider} from 'react-redux'
 import {reduxStore, useSelector} from "@/lib/redux/store";
-import {Button, ConfigProvider, Layout, Menu, MenuProps, Space, Typography} from "antd";
+import {ConfigProvider, Layout, Menu, MenuProps, Space, Typography} from "antd";
 import {usePathname, useRouter} from "next/navigation";
 import {TopBar} from "@/components/layout/TopBar/TopBar";
 import Title from "antd/es/typography/Title";
 import {Icon} from "@/components/icons/homeIcons";
 import {defaultTheme, themeMap} from "@/config/themeConfig";
 import {items} from "@/config/items";
+import {selectThemeValue} from "@/lib/redux/slices/themeSlice";
 import MusicBar from "@/components/layout/MusicBar/MusicBar";
-import {createTheme, ThemeProvider} from "@mui/material";
-import {selectThemeName} from "@/lib/redux/slices/themeSlice";
 
 const {Header, Content, Footer, Sider} = Layout;
 
@@ -31,16 +30,8 @@ export const Providers = ({children}: { children: React.ReactNode }) => {
     const router = useRouter();
     const pathname = usePathname();
     const [key, setKey] = useState('')
-    const themeName = useSelector(selectThemeName)
-    const theme = themeMap.get(themeName)?themeMap.get(themeName):defaultTheme;
-
-    const muiTheme = createTheme({
-        palette: {
-            primary: {
-                main: theme?.token?.colorPrimary ? theme.token.colorPrimary : '#1ecd98'
-            }
-        }
-    })
+    const themeValue = useSelector(selectThemeValue)
+    const theme = themeMap.get(themeValue) ? themeMap.get(themeValue) : defaultTheme;
 
     useEffect(() => {
         setKey(pathname.substring(1))
@@ -57,7 +48,6 @@ export const Providers = ({children}: { children: React.ReactNode }) => {
         setKey(e.key)
     }
     return <ConfigProvider theme={theme}>
-        <ThemeProvider theme={muiTheme}>
             <Layout style={{height: '100vh', overflow: "hidden"}}>
                 <Header style={{padding: 0}}>
                     <div style={{
@@ -86,11 +76,6 @@ export const Providers = ({children}: { children: React.ReactNode }) => {
                                 <Title level={2}>
                                     当前页面：{key}
                                 </Title>
-                                <audio controls>
-                                    <source src="/music/TruE - 黄龄,HOYO-MiX.flac" type="audio/flac"/>
-                                </audio>
-                                <Button href={'/Reiaudio'} type={"primary"}>播放器</Button>
-                                <Button href={'/test'} type={"primary"}>测试页面</Button>
                                 {children}
                             </div>
                         </Content>
@@ -103,7 +88,6 @@ export const Providers = ({children}: { children: React.ReactNode }) => {
                     </Layout>
                 </Layout>
             </Layout>
-        </ThemeProvider>
     </ConfigProvider>
 }
 

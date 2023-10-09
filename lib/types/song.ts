@@ -7,6 +7,7 @@ export interface Song {
     lyricist?: string,
     composer?: string,
     localAudioSrc?: string,
+    filename?:string,
     url?: string,
     image?: string,
     id: number,
@@ -41,19 +42,13 @@ export const serverSong: Song[] = [
         singer: "说说Crystal",
         url:  'http://localhost:8080/api/music/file/说说Crystal - 天知河 (Live).ogg',
         image: '/girl.jpg',
-        id: 0,
-    }, {
-        name: "时光盲盒",
-        singer: "ChiliChill",
-        url: 'http://localhost:8080/api/music/file/ChiliChill - 时光盲盒.ogg',
-        image: '/girl.jpg',
         id: 1,
     }, {
-        name: "TruE",
-        singer: "黄龄,HOYO-MiX",
-        localAudioSrc: '/music/TruE - 黄龄,HOYO-MiX.flac',
+        name: "阿拉斯加海湾",
+        singer: "蓝心羽",
+        url: 'http://localhost:8080/api/music/file/蓝心羽 - 阿拉斯加海湾.ogg',
         image: '/girl.jpg',
         id: 2,
-    },
+    }
 ]
 

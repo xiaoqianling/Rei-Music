@@ -7,7 +7,7 @@ import Link from "next/link";
 // 侧边栏导航
 
 
-export const  items : MenuProps['items'] = [
+export const items: MenuProps['items'] = [
     {
         label: '在线音乐',
         type: 'group',
@@ -62,6 +62,10 @@ export const  items : MenuProps['items'] = [
     },
     {
         type: 'divider'
+    },
+    {
+        label: (<Link href={'upload'}>上传音乐</Link>),
+        key: 'upload',
     },
     {
         label: 'text1',

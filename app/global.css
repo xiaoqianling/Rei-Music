@@ -16,7 +16,7 @@ html, body {
 
 .sider {
     overflow-y: scroll;
-    height: 92vh;
+    height: 100%;
     position: fixed;
     left: 0;
     top: 0;
@@ -32,6 +32,7 @@ html, body {
 
 .menu {
     padding:0 2vh;
+    min-height: 100%;
 }
 .menu > li {
     /*background-color: #5fdaf5;*/

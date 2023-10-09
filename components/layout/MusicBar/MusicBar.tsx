@@ -1,43 +1,41 @@
 'use client'
-import React, {useEffect, useRef} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import Image from "next/image";
 import {useDispatch, useSelector} from "@/lib/redux/store";
 import {
+    fetchMetadata,
     pause,
     play, playNextSong, playPrevSong,
-    selectCurrentTime,
     selectIsPlaying,
     selectPlaylist,
     selectSong,
-    setCurrentTime
 } from "@/lib/redux/slices";
 import {Howl} from "howler";
 import {Song} from "@/lib/types/song";
-import {MusicBarRight} from "@/components/layout/MusicBar/MusicBarRight";
+import {MusicBarRight, timeConvert} from "@/components/layout/MusicBar/MusicBarRight";
 import {MusicOperation} from "@/components/layout/MusicBar/MusicOperation";
 import {MusicInfo} from "@/components/layout/MusicBar/MusicInfo";
 import {Slider} from "antd";
-import {setIn} from "immutable";
 
 
 function MusicBar() {
     const dispatch = useDispatch()
     const isPlaying = useSelector(selectIsPlaying)
-    const currentTime = useSelector(selectCurrentTime)
+    const [currentTime, setCurrentTime] = useState<number>(0)
     const songInfo: Song | undefined = useSelector(selectSong)
     const playlist = useSelector(selectPlaylist)
-    const audioRef = useRef<Howl>(null!)
+    const audioRef = useRef<Howl | undefined>(undefined)
     const animationRef = useRef<number>(null!)
+    const [playCondition, setPlayCondition] = useState<boolean>(false);
+    const [autoplay, setAutoplay] = useState<boolean>(false)
 
     useEffect(() => {
         const updateTime = () => {
-            dispatch(setCurrentTime(audioRef.current.seek()));
+            setCurrentTime(audioRef.current ? audioRef.current?.seek() : 0)
             animationRef.current = requestAnimationFrame(updateTime);
         };
-        let sound: Howl
-        if (songInfo === undefined) {
-            sound = new Howl({src: ''})
-        } else {
+        let sound: Howl | undefined = undefined
+        if (songInfo !== undefined && playCondition) {
             let songSrc: string
             if (songInfo.localAudioSrc) {
                 songSrc = songInfo.localAudioSrc
@@ -48,6 +46,7 @@ function MusicBar() {
             sound = new Howl({
                 src: songSrc,
                 volume: 0.09,
+                autoplay: autoplay,
                 onplay: () => {
                     console.log('开始播放')
                     dispatch(play())
@@ -61,33 +60,47 @@ function MusicBar() {
                     // todo 默认播放下一首
                     dispatch(playNextSong());
                     console.log('结束')
-                    dispatch(setCurrentTime(0));
                     cancelAnimationFrame(animationRef.current);
-                },
-                onload: () => {
-                    console.log('加载中')
                 }
             })
         }
         audioRef.current = sound
         return () => {
             console.log('effect return')
-            sound.stop()
+            sound?.stop()
             cancelAnimationFrame(animationRef.current)
         }
-    }, [dispatch, songInfo])
+    }, [dispatch, songInfo, playCondition, autoplay])
 
     useEffect(() => {
-        if (isPlaying && !audioRef.current.playing() && audioRef.current.state() === 'loaded') {
+        dispatch(fetchMetadata())
+    }, [dispatch])
+
+    useEffect(() => {
+        if (isPlaying && audioRef.current && !audioRef.current.playing() && audioRef.current.state() === 'loaded') {
+            console.log('useEffect-[isPlaying]调用')
             audioRef.current.play();
         }
     }, [isPlaying])
 
+    useEffect(() => {
+        const changeCondition = () => {
+            setPlayCondition(true);
+        }
+        if (!playCondition) {
+            window.addEventListener('click', changeCondition)
+        }
+        return () => {
+            window.removeEventListener('click', changeCondition)
+        }
+    }, [playCondition])
+
     const playMusic = () => {
-        audioRef.current.play()
+        audioRef.current?.play()
+        setAutoplay(true)
     }
     const pauseMusic = () => {
-        audioRef.current.pause()
+        audioRef.current?.pause()
     }
     const nextMusic = () => {
         dispatch(playNextSong())
@@ -96,34 +109,17 @@ function MusicBar() {
         dispatch(playPrevSong())
     }
     const sliderChangeCommit = (value: number) => {
-        audioRef.current.seek(value)
+        audioRef.current?.seek(value)
         if (!isPlaying) {
-            audioRef.current.play()
+            audioRef.current?.play()
         }
 
     }
     const sliderChange = (value: number) => {
-        dispatch(setCurrentTime(value))
-
+        audioRef.current?.seek(value)
     }
-
     return (
         <div style={{display: "flex", flexFlow: 'column', height: '100%', width: '100%'}}>
-            {/*todo slider显示样式*/}
-            {/*<Slider
-                sx={{margin: 0, padding: 0}}
-                size="small"
-                max={audioRef.current?.duration()}
-                min={0}
-                color={'primary'}
-                value={currentTime}
-                valueLabelDisplay="on"
-                valueLabelFormat={timeConvert(currentTime)}
-                onChange={sliderChange}
-                onChangeCommitted={sliderChangeCommit}
-                disableSwap={true}
-                step={1}
-            />*/}
             <Slider
                 style={{margin: 0}}
                 max={audioRef.current?.duration()}
@@ -131,6 +127,11 @@ function MusicBar() {
                 step={0.1}
                 onChange={sliderChange}
                 onAfterChange={sliderChangeCommit}
+                tooltip={{
+                    "formatter": (value) => {
+                        return <>{value ? timeConvert(value) : ''}</>
+                    }
+                }}
             />
             <div style={{
                 width: '100%',
@@ -156,9 +157,3 @@ function MusicBar() {
 
 
 export default MusicBar;
-
-export function timeConvert(time: number): string {
-    const minute = Math.floor(time / 60)
-    const second = Math.round(time % 60)
-    return (minute < 10 ? '0' : '') + minute + ':' + (second < 10 ? '0' : '') + second
-}

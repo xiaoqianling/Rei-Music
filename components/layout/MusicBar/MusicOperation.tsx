@@ -1,5 +1,4 @@
 import {Button} from "antd";
-import {Slider} from "@mui/material";
 import React from "react";
 
 export function MusicOperation({isPlaying, onPause, onPlay, onNext, onPrev, disabled}: {
@@ -18,7 +17,6 @@ export function MusicOperation({isPlaying, onPause, onPlay, onNext, onPrev, disa
                 {isPlaying ? '暂停' : '播放'}
             </Button>
             <Button onClick={onNext}>下一首</Button>
-            <Slider orientation={"vertical"} style={{position: "absolute", bottom: '30px', height: '100px'}}/>
         </div>
     )
 }

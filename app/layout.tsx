@@ -11,7 +11,6 @@ export const metadata: Metadata = {
         icon: 'girl.jpg'
     }
 }
-
 export default function RootLayout({
                                        children,
                                    }: {
@@ -19,14 +18,14 @@ export default function RootLayout({
 }) {
 
 
-
     return (
         <html lang="zh">
         <body>
         <StrictMode>
-                <ReduxProvider>
-                    {children}
-                </ReduxProvider>
+            <ReduxProvider>
+                {children}
+            </ReduxProvider>
+
         </StrictMode>
         </body>
         </html>
