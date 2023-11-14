@@ -3,16 +3,19 @@ import React, {useEffect, useRef, useState} from 'react';
 import Image from "next/image";
 import {useDispatch, useSelector} from "@/lib/redux/store";
 import {
+    cutSongByID,
     fetchMetadata,
     pause,
-    play, playNextSong, playPrevSong,
+    play,
+    playNextSong,
+    playPrevSong,
     selectIsPlaying,
     selectPlaylist,
     selectSong,
 } from "@/lib/redux/slices";
 import {Howl} from "howler";
 import {Song} from "@/lib/types/song";
-import {MusicBarRight, timeConvert} from "@/components/layout/MusicBar/MusicBarRight";
+import MusicBarRight, {timeConvert} from "@/components/layout/MusicBar/MusicBarRight";
 import {MusicOperation} from "@/components/layout/MusicBar/MusicOperation";
 import {MusicInfo} from "@/components/layout/MusicBar/MusicInfo";
 import {Slider} from "antd";
@@ -104,9 +107,11 @@ function MusicBar() {
     }
     const nextMusic = () => {
         dispatch(playNextSong())
+        setAutoplay(true)
     }
     const prevMusic = () => {
         dispatch(playPrevSong())
+        setAutoplay(true)
     }
     const sliderChangeCommit = (value: number) => {
         audioRef.current?.seek(value)
@@ -118,6 +123,25 @@ function MusicBar() {
     const sliderChange = (value: number) => {
         audioRef.current?.seek(value)
     }
+
+    // 双击切歌
+    const handleDrawerDoubleClick = (song: Song) => {
+        if (songInfo && songInfo.id !== song.id) {
+            console.log('切歌')
+            dispatch(cutSongByID(song.id))
+            setAutoplay(true)
+        }
+        if (!isPlaying) {
+             console.log('播放')
+            audioRef.current?.play()
+        }
+    }
+
+    //  右键显示操作
+    const handleDrawerContextMenu = (e: React.MouseEvent) => {
+
+    }
+
     return (
         <div style={{display: "flex", flexFlow: 'column', height: '100%', width: '100%'}}>
             <Slider
@@ -149,7 +173,10 @@ function MusicBar() {
                 </div>
                 <MusicOperation isPlaying={isPlaying} onPlay={playMusic} onPause={pauseMusic} onNext={nextMusic}
                                 onPrev={prevMusic} disabled={false}/>
-                <MusicBarRight currentTime={currentTime} duration={audioRef.current?.duration()} playlist={playlist}/>
+                <MusicBarRight currentTime={currentTime} duration={audioRef.current?.duration()} playlist={playlist}
+                               currentSongId={songInfo?.id}
+                               onDrawerItemContextMenu={handleDrawerContextMenu}
+                               onDrawerItemDoubleClick={handleDrawerDoubleClick}/>
             </div>
         </div>
     );

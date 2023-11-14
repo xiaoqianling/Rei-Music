@@ -1,6 +1,3 @@
-import ErrnoException = NodeJS.ErrnoException;
-
-
 export interface Song {
     name: string,
     singer: string,
@@ -11,6 +8,7 @@ export interface Song {
     url?: string,
     image?: string,
     id: number,
+    length?: number
 }
 
 export const localSong: Song[] = [

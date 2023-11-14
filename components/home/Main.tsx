@@ -1,6 +1,5 @@
 import React from 'react';
 import style from './home.module.css'
-import {Button} from "antd";
 
 
 // 首页

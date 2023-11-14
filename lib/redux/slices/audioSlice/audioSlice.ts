@@ -1,5 +1,5 @@
 import {createAsyncThunk, createSlice, PayloadAction} from "@reduxjs/toolkit";
-import {Song, serverSong} from "@/lib/types/song";
+import {serverSong, Song} from "@/lib/types/song";
 import axios from "axios";
 
 export enum AudioStatus {
@@ -53,6 +53,7 @@ export const audioSlice = createSlice({
             if (song !== undefined) {
                 // state.isPlaying = true
                 state.songID = action.payload
+                state.currentIndex = state.playlist.indexOf(song);
             }
         },
         playNextSong: (state) => {

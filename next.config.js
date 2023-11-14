@@ -6,6 +6,10 @@ const nextConfig = {
             hostname: '*',
             port: '',
         }]
+    },
+    reactStrictMode:true,
+    compiler:{
+        styledComponents:true
     }
 }
 

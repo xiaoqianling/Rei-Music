@@ -12,7 +12,7 @@ export function MusicOperation({isPlaying, onPause, onPlay, onNext, onPrev, disa
     return (
         <div>
             {/*    Select 选择播放模式 上一首暂停下一首 Slider音量*/}
-            <Button>上一首</Button>
+            <Button onClick={onPrev}>上一首</Button>
             <Button type={"primary"} onClick={() => isPlaying ? onPause() : onPlay()} disabled={disabled}>
                 {isPlaying ? '暂停' : '播放'}
             </Button>

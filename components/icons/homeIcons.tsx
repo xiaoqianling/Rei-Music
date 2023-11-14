@@ -1,7 +1,6 @@
-import React, {useEffect} from 'react'
+import React from 'react'
 import HomeIcons from "@/components/icons/homeIconsProps";
 import {theme} from "antd";
-import css from "styled-jsx/css";
 
 
 function IconContainer({children, className, size}: { children: React.ReactNode, className?: string, size?: number }) {

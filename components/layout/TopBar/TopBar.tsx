@@ -16,7 +16,7 @@ export function TopBar() {
     const [inputValue, setInputValue] = useState<string>('')
     const [messageApi, contextHolder] = message.useMessage();
 
-    const searchSong = (e:any) => {
+    const searchSong = (e: any) => {
         if (inputValue === '') {
             messageApi.open({
                 type: "warning",
