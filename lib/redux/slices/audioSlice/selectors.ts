@@ -4,19 +4,19 @@ import {Song} from "@/lib/types/song";
 import {createSelector} from "reselect";
 
 export const selectIsPlaying = (state: ReduxState): boolean => {
-    return state.audio.isPlaying
+  return state.audio.isPlaying
 }
 export const selectPlaylist = (state: ReduxState): Song[] => {
-    // console.log('selector!')
-    return state.audio.playlist
+  // console.log('selector!')
+  return state.audio.playlist
 }
 export const selectPlaylist2 = createSelector([selectPlaylist],
-    (playlist) => {
-        return undefined
-    })
+  (playlist) => {
+    return undefined
+  })
 export const selectSongId = (state: ReduxState): number => {
-    // console.log('selectSongId selector!')
-    return state.audio.songID
+  // console.log('selectSongId selector!')
+  return state.audio.songID
 }
 
 
@@ -27,10 +27,10 @@ export const selectSongId = (state: ReduxState): number => {
  * @return 若无播放歌曲返回undefined
  */
 export const selectSong = createSelector(
-    [selectPlaylist, selectSongId],
-    (playlist, id) => {
-        if (playlist.length === 0)
-            return undefined;
-        return playlist.find(song => song.id === id);
-    }
+  [selectPlaylist, selectSongId],
+  (playlist, id) => {
+    if (playlist.length === 0)
+      return undefined;
+    return playlist.find(song => song.id === id);
+  }
 );

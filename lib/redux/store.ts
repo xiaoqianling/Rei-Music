@@ -3,8 +3,8 @@ import {reducer} from "@/lib/redux/rootReducer";
 import {TypedUseSelectorHook, useDispatch as useReduxDispatch, useSelector as useReduxSelector} from "react-redux";
 
 export const reduxStore = configureStore({
-    reducer,
-    // todo 添加中间件
+  reducer,
+  // todo 添加中间件
 })
 
 // 为什么要为钩子包装一下 直接用不一样吗？

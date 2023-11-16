@@ -1,9 +1,10 @@
-import Main from "@/components/home/Main";
+import About from "@/app/ui/home/about";
 
 
 function Home() {
-    return <>
-        <Main/>
-    </>
+  return <>
+    <About/>
+  </>
 }
+
 export default Home;
