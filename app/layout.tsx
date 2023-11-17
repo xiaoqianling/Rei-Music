@@ -1,7 +1,7 @@
 import '@/app/ui/global.css'
 import type {Metadata} from 'next'
 import React, {StrictMode} from "react";
-import {ReduxProvider} from "@/app/ui/redux-provider";
+import ReduxProvider from "@/app/ui/redux-provider";
 
 export const metadata: Metadata = {
   title: 'Rei Music',
@@ -10,11 +10,7 @@ export const metadata: Metadata = {
     icon: 'girl.jpg'
   }
 }
-export default function RootLayout({
-                                     children,
-                                   }: {
-  children: React.ReactNode
-}) {
+export default function RootLayout({children}: { children: React.ReactNode }) {
 
   return (
     <html lang="zh">

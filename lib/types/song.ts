@@ -19,9 +19,15 @@ export const localSong: Song[] = [
     image: '/girl.jpg',
     id: 0,
   }, {
-    name: "TruE",
-    singer: "黄龄,HOYO-MiX",
-    localAudioSrc: '/music/TruE - 黄龄,HOYO-MiX.flac',
+    name: "时光盲盒",
+    singer: "ChiliChill",
+    localAudioSrc: '/music/ChiliChill - 时光盲盒.ogg',
+    image: '/girl.jpg',
+    id: 1,
+  },{
+    name: "奇迹",
+    singer: "高桥李依",
+    localAudioSrc: '/music/高桥李依-キセキ.flac',
     image: '/girl.jpg',
     id: 1,
   }, {
@@ -29,7 +35,7 @@ export const localSong: Song[] = [
     singer: "黄龄,HOYO-MiX",
     localAudioSrc: '/music/TruE - 黄龄,HOYO-MiX.flac',
     image: '/girl.jpg',
-    id: 2,
+    id: 3,
   },
 ]
 

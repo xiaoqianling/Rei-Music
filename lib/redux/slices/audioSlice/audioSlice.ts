@@ -22,7 +22,7 @@ export interface AudioData {
 const initialState: AudioData = {
   isPlaying: false,
   playlist: localSong,
-  songID: 1,
+  songID: 0,
   currentIndex: 0,
   song: undefined,
   status: AudioStatus.IDLE,

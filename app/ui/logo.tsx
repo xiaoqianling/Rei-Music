@@ -14,7 +14,7 @@ function Logo() {
   }
 
   return (
-    <div className={"w-64 font-bold text-xl cursor-pointer"} onClick={handleBackHome}>
+    <div className={"w-64 flex items-center font-bold text-xl cursor-pointer"} onClick={handleBackHome}>
       <Icon size={40}/>
       <span className="md:text-2xl">Rei Music</span>
     </div>
