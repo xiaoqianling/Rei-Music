@@ -1,9 +1,8 @@
 import React, {useRef} from 'react';
-import {Drawer, List, Typography} from "antd";
 import {Song} from "@/lib/types/song";
-import MusicBarDrawerItem from "@/app/ui/layout/musicBar/drawerItem";
 import {useSelector} from "@/lib/redux/store";
 import {selectIsPlaying} from "@/lib/redux/slices";
+import {Drawer} from "@mui/material";
 
 function MusicBarDrawer({open, onClose, data, onContextMenu, onDoubleClick, currentSongId}: {
   open: boolean,
@@ -17,7 +16,7 @@ function MusicBarDrawer({open, onClose, data, onContextMenu, onDoubleClick, curr
   const isPlaying = useSelector(selectIsPlaying)
 
   return (
-    <Drawer placement={'right'} open={open} onClose={onClose} mask={false} size={"default"} panelRef={containerRef}
+    /*<Drawer placement={'right'} open={open} onClose={onClose} mask={false} size={"default"} panelRef={containerRef}
             className="bg-blue-300" drawerStyle={{backgroundColor: "lightcyan"}}>
       <div className="text-2xl">播放列表</div>
       <Typography.Text>
@@ -33,7 +32,12 @@ function MusicBarDrawer({open, onClose, data, onContextMenu, onDoubleClick, curr
                                      onContextMenu={onContextMenu}/>
         }}
       />
-    </Drawer>
+    </Drawer>*/
+    <>
+      {/*<Drawer anchor={"right"} open={true} onClose={onClose}>
+        nihao
+      </Drawer>*/}
+    </>
   );
 }
 

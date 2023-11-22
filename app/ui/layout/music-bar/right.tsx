@@ -2,7 +2,7 @@
 import React, {useEffect, useState} from "react";
 import {MusicList} from "@/app/ui/components/icons/homeIcons";
 import {Song} from "@/lib/types/song";
-import MusicBarDrawer from "@/app/ui/layout/musicBar/drawer";
+import MusicBarDrawer from "@/app/ui/layout/music-bar/drawer";
 
 interface Props {
   currentTime?: number,

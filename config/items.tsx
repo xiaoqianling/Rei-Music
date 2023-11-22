@@ -1,4 +1,3 @@
-import {MenuProps} from "antd";
 import React from "react";
 import Link from "next/link";
 import {Clock, Computer, Like, Music, MusicList, Radar, Recommend, Video} from "@/app/ui/components/icons/homeIcons";
@@ -6,7 +5,7 @@ import {Clock, Computer, Like, Music, MusicList, Radar, Recommend, Video} from "
 // 侧边栏导航
 
 
-export const items: MenuProps['items'] = [
+export const items = [
   {
     label: '在线音乐',
     type: 'group',

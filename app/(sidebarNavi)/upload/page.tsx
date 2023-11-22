@@ -1,18 +1,12 @@
 'use client'
 import React from 'react';
 import axios from "axios";
-import {Form, message, Typography} from "antd";
-import Input from "antd/es/input/Input";
-import {UploadFile} from "antd/es/upload/interface";
 import {useDispatch} from "@/lib/redux/store";
 import {fetchMetadata} from "@/lib/redux/slices";
-import CustomUpload from "@/app/ui/music/upload";
-import Button from "@/app/ui/components/button";
 
 
 const Page: React.FC = () => {
   const dispatch = useDispatch()
-  const [messageApi, contextHolder] = message.useMessage()
 
   const onFinish = (values: any) => {
     const formData = new FormData()
@@ -28,12 +22,10 @@ const Page: React.FC = () => {
       .then(data => {
         if (data.code === 200) {
           dispatch(fetchMetadata());
-          messageApi.success("文件添加成功").then()
         }
       })
       .catch(error => {
         console.error(error);
-        messageApi.error("文件添加失败").then()
       });
   };
 
@@ -46,11 +38,11 @@ const Page: React.FC = () => {
     singer?: string;
     album?: string;
     composer?: string,
-    file?: UploadFile
+    // file?: UploadFile
   };
 
   return <div className={"w-96"}>
-    {contextHolder}
+    {/*{contextHolder}
     <Typography.Title level={3} className={"text-center"}>添加歌曲</Typography.Title>
     <Form
       name="basic"
@@ -98,7 +90,7 @@ const Page: React.FC = () => {
           提交
         </Button>
       </Form.Item>
-    </Form>
+    </Form>*/}
   </div>
 };
 

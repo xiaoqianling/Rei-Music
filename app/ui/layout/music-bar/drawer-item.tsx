@@ -1,6 +1,6 @@
 import React from 'react';
 import {Song} from "@/lib/types/song";
-import {timeConvert} from "@/app/ui/layout/musicBar/right";
+import {timeConvert} from "@/app/ui/layout/music-bar/right";
 
 function MusicBarDrawerItem({song, onContextMenu, onDoubleClick, isPlaying}: {
   song: Song,
