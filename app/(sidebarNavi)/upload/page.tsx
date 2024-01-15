@@ -1,21 +1,35 @@
 'use client'
-import React from 'react';
-import axios from "axios";
+import React, {useState} from 'react';
 import {useDispatch} from "@/lib/redux/store";
+import FormItem from "@/app/ui/upload/form-item";
+import UploadButton from "@/app/ui/upload/upload-button";
+import Button from "@/app/ui/components/button";
+import axios from "axios";
 import {fetchMetadata} from "@/lib/redux/slices";
 
 
 const Page: React.FC = () => {
   const dispatch = useDispatch()
+  const [name, setName] = useState<string>('');
+  const [singer, setSinger] = useState<string>('');
+  const [album, setAlbum] = useState<string>('');
+  const [composer, setComposer] = useState<string>('');
+  const [file, setFile] = useState<File | null>(null);
+  const [verifyFiled, setVerifyFiled] = useState(false);
 
-  const onFinish = (values: any) => {
-    const formData = new FormData()
-    formData.append('name', values.name)
-    formData.append('singer', values.singer)
-    values.album && formData.append('album', values.album)
-    values.composer && formData.append('album', values.composer)
-    formData.append('file', values.file)
-    console.log(formData)
+  const onFinish = (event: any) => {
+    event.preventDefault()
+    const formData = new FormData();
+    if (name && singer) {
+      formData.append('name', name);
+      formData.append('singer', singer);
+    } else {
+      setVerifyFiled(true);
+      return
+    }
+    album && formData.append('album', album);
+    composer && formData.append('composer', composer);
+    file && formData.append('file', file);
     axios.put("http://localhost:8080/api/music/file/withInfo", formData,
       {headers: {"Content-Type": "multipart/form-data"}})
       .then(response => response.data)
@@ -23,74 +37,30 @@ const Page: React.FC = () => {
         if (data.code === 200) {
           dispatch(fetchMetadata());
         }
+        console.log("response:", data)
       })
       .catch(error => {
         console.error(error);
       });
   };
-
-  const onFinishFailed = (errorInfo: any) => {
-    console.log('Failed:', errorInfo);
-  };
-
-  type FieldType = {
-    name?: string;
-    singer?: string;
-    album?: string;
-    composer?: string,
-    // file?: UploadFile
+  const handleFileChange = (files: FileList | null) => {
+    if (files && files.length > 0) {
+      setFile(files[0]);
+    }
   };
 
   return <div className={"w-96"}>
-    {/*{contextHolder}
-    <Typography.Title level={3} className={"text-center"}>添加歌曲</Typography.Title>
-    <Form
-      name="basic"
-      labelCol={{span: 4}}
-      wrapperCol={{span: 16}}
-      onFinish={onFinish}
-      onFinishFailed={onFinishFailed}
-      autoComplete="off"
-    >
-      <Form.Item<FieldType>
-        label="歌曲名"
-        name="name"
-        rules={[{required: true, message: '歌曲名必填!'}]}
-      >
-        <Input maxLength={40} showCount allowClear/>
-      </Form.Item>
-      <Form.Item<FieldType>
-        label="歌手"
-        name="singer"
-        rules={[{required: true, message: '歌手名必填!'}]}
-      >
-        <Input/>
-      </Form.Item>
-      <Form.Item<FieldType>
-        label="专辑名"
-        name="album"
-      >
-        <Input/>
-      </Form.Item>
-      <Form.Item<FieldType>
-        label="作曲"
-        name="composer"
-      >
-        <Input/>
-      </Form.Item>
-      <Form.Item<FieldType>
-        label="音乐文件"
-        name="file"
-        rules={[{required: true, message: '文件必填!'}]}
-      >
-        <CustomUpload/>
-      </Form.Item>
-      <Form.Item wrapperCol={{offset: 10, span: 16}}>
-        <Button type={"submit"}>
-          提交
-        </Button>
-      </Form.Item>
-    </Form>*/}
+    <h1>添加歌曲</h1>
+    <form onSubmit={onFinish}>
+      <FormItem title="歌名" value={name} onChange={setName} required showError={verifyFiled}/>
+      <FormItem title="歌手" value={singer} onChange={setSinger} required showError={verifyFiled}/>
+      <FormItem title="专辑" value={album} onChange={setAlbum}/>
+      <FormItem title="作曲" value={composer} onChange={setComposer}/>
+      <UploadButton onChange={handleFileChange} className="my-2" acceptFileType=".flac,.ogg,.mp3"/>
+      <Button type={"submit"} primary>
+        上传
+      </Button>
+    </form>
   </div>
 };
 

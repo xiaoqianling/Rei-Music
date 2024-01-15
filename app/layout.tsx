@@ -1,7 +1,7 @@
 import '@/app/ui/global.css'
 import type {Metadata} from 'next'
 import React, {StrictMode} from "react";
-import ReduxProvider from "@/app/ui/redux-provider";
+import {Providers} from "@/lib/providers";
 
 export const metadata: Metadata = {
   title: 'Rei Music',
@@ -16,9 +16,9 @@ export default function RootLayout({children}: { children: React.ReactNode }) {
     <html lang="zh">
     <body>
     <StrictMode>
-      <ReduxProvider>
+      <Providers>
         {children}
-      </ReduxProvider>
+      </Providers>
     </StrictMode>
     </body>
     </html>

@@ -1,6 +1,5 @@
 import React from 'react';
 
-
 // 首页
 function About() {
   return <div className={`flex justify-center items-center`}>

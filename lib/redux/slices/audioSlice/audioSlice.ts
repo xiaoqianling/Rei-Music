@@ -1,5 +1,5 @@
 import {createAsyncThunk, createSlice, PayloadAction} from "@reduxjs/toolkit";
-import {localSong, Song} from "@/lib/types/song";
+import {localSong, serverSong, Song} from "@/lib/types/song";
 import axios from "axios";
 
 export enum AudioStatus {
@@ -10,21 +10,32 @@ export enum AudioStatus {
 }
 
 export interface AudioData {
-  isPlaying: boolean,
   playlist: Song[],
+  // 音乐在数组内索引
   currentIndex: number,
+  // 音乐ID标识
   songID: number,
-  song: Howl | undefined,
+  currentSong: Song | undefined,
+  isPlaying: boolean,
+  volume: number,
+  length: number,
+  // 当前时间
+  currentTime: number,
   status: AudioStatus,
   error?: string
 }
 
 const initialState: AudioData = {
-  isPlaying: false,
   playlist: localSong,
+  // 当前播放歌曲id 为什么要从春日影开始!!!!!
   songID: 0,
+  // 当前播放歌曲index
   currentIndex: 0,
-  song: undefined,
+  currentSong: undefined,
+  isPlaying: false,
+  volume: 0.03,
+  length: 0,
+  currentTime: 0,
   status: AudioStatus.IDLE,
 }
 
@@ -45,6 +56,18 @@ export const audioSlice = createSlice({
     pause: (state) => {
       state.isPlaying = false;
     },
+    switchPlay: (state) => {
+      state.isPlaying = !state.isPlaying
+    },
+    setSongDuration: (state, action:PayloadAction<number>) => {
+      state.length = action.payload
+    },
+    setCurrentTime: (state, action:PayloadAction<number>) => {
+      state.currentTime = action.payload
+    },
+    setVolume: (state, action: PayloadAction<number>) => {
+      state.volume = action.payload
+    },
     /**
      * 播放指定id的歌曲
      */
@@ -58,12 +81,10 @@ export const audioSlice = createSlice({
     },
     playNextSong: (state) => {
       state.currentIndex = (state.currentIndex + 1) % state.playlist.length
-      console.log("当前index", state.currentIndex)
       state.songID = state.playlist[state.currentIndex].id
     },
     playPrevSong: (state) => {
       state.currentIndex = (state.currentIndex - 1 + state.playlist.length) % state.playlist.length
-      console.log("当前index", state.currentIndex)
       state.songID = state.playlist[state.currentIndex].id
     }
   },
@@ -80,6 +101,9 @@ export const audioSlice = createSlice({
             song.url = "http://localhost:8080/api/music/file/" + song.filename
             return song
           }))
+        if (state.playlist.find(song => song.id === state.songID) == undefined) {
+          state.songID = state.playlist[0].id
+        }
       })
       .addCase(fetchMetadata.rejected, (state, action) => {
         state.status = AudioStatus.FAILED
@@ -91,6 +115,10 @@ export const audioSlice = createSlice({
 export const {
   play,
   pause,
+  switchPlay,
+  setSongDuration,
+  setCurrentTime,
+  setVolume,
   playNextSong,
   playPrevSong,
   cutSongByID

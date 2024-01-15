@@ -1,10 +1,10 @@
 import About from "@/app/ui/home/about";
 
 
-function Home() {
+function Page() {
   return <>
     <About/>
   </>
 }
 
-export default Home;
+export default Page;

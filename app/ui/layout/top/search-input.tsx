@@ -1,17 +1,19 @@
-import React, {useState} from 'react';
-import {usePathname} from "next/navigation";
+import React, {FC, useState} from 'react';
 import {Search} from "@/app/ui/components/icons/homeIcons";
 
-function SearchInput() {
-  const pathname = usePathname().substring(1);
-  const [isInput, setIsInput] = useState<boolean>(false)
+interface Props {
+  onSearch?: (keyword: string) => void
+}
+
+const SearchInput: FC<Props> = ({onSearch}) => {
   const [inputValue, setInputValue] = useState<string>('')
 
   const searchSong = (e: any) => {
     if (inputValue === '') {
-      console.log("查询为空")
+      onSearch && onSearch(inputValue)
     } else {
       console.log("搜索歌曲:", inputValue)
+      onSearch && onSearch(inputValue)
       e.target.blur()
     }
   }

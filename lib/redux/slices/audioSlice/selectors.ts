@@ -10,17 +10,16 @@ export const selectPlaylist = (state: ReduxState): Song[] => {
   // console.log('selector!')
   return state.audio.playlist
 }
-export const selectPlaylist2 = createSelector([selectPlaylist],
-  (playlist) => {
-    return undefined
-  })
 export const selectSongId = (state: ReduxState): number => {
   // console.log('selectSongId selector!')
   return state.audio.songID
 }
 
+export const selectCurrentSong = (state: ReduxState): Song|undefined => state.audio.currentSong;
 
-// const selectCurrentIndex = (state: ReduxState) => state.audio.currentIndex;
+export const selectVolume = (state: ReduxState): number => state.audio.volume;
+export const selectCurrentTime = (state: ReduxState): number => state.audio.currentTime;
+export const selectLength = (state: ReduxState): number => state.audio.length;
 
 
 /*

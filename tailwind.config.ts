@@ -1,5 +1,5 @@
 import type {Config} from 'tailwindcss';
-/** @type {import('tailwindcss').Config} */
+
 const config: Config = {
   content: [
     './pages/**/*.{js,ts,jsx,tsx,mdx}',
@@ -49,4 +49,5 @@ const config: Config = {
 }
 
 export default config;
+export type TailwindConfigType = typeof config
 

@@ -90,5 +90,3 @@ export const items = [
     key: 'text7'
   }
 ]
-
-
