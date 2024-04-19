@@ -1,5 +1,7 @@
 import React, {FC, useState} from 'react';
 import {Search} from "@/app/ui/components/icons/homeIcons";
+import {useSelector} from "@/lib/redux/store";
+import {selectCurrentTheme} from "@/lib/redux/slices";
 
 interface Props {
   onSearch?: (keyword: string) => void
@@ -7,7 +9,7 @@ interface Props {
 
 const SearchInput: FC<Props> = ({onSearch}) => {
   const [inputValue, setInputValue] = useState<string>('')
-
+  const currentTheme = useSelector(selectCurrentTheme)
   const searchSong = (e: any) => {
     if (inputValue === '') {
       onSearch && onSearch(inputValue)
@@ -25,11 +27,11 @@ const SearchInput: FC<Props> = ({onSearch}) => {
   }
 
   return (
-    <div className="flex items-center w-fit px-2 bg-default-200 rounded">
+    <div className="flex items-center w-fit px-2 rounded" style={{backgroundColor: currentTheme.config.sidebg}}>
       <input type="text" placeholder={"搜索音乐"} value={inputValue} onKeyDown={handleKeyDown}
              onChange={(e) => setInputValue(e.target.value)}
              className="bg-transparent solid border-transparent h-8 placeholder-opacity-80
-             placeholder:text-sm placeholder-sky-700 focus:outline-none"/>
+             placeholder:text-sm focus:outline-none"/>
       <div className="cursor-pointer" onClick={searchSong}><Search/></div>
     </div>
   );
