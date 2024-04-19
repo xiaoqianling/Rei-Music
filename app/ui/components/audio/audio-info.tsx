@@ -1,11 +1,10 @@
 import React from 'react';
 import Image from "next/image";
 import {useSelector} from "@/lib/redux/store";
-import {selectSong} from "@/lib/redux/slices";
+import {selectCurrentSong} from "@/lib/redux/slices";
 
 function AudioInfo() {
-  const song = useSelector(selectSong)
-
+  const song = useSelector(selectCurrentSong)
   return (
     <div className={"flex ml-0 w-60 py-0.5"}>
       <Image className="rounded"

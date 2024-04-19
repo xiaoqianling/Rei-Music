@@ -1,37 +1,39 @@
+'use client'
 import React from 'react';
+import {useSelector} from "@/lib/redux/store";
+import {selectCurrentTheme} from "@/lib/redux/slices";
+import styled from 'styled-components';
+
+const AboutBorder = styled.div`
+    width: 50%;
+    height: 24rem;
+    overflow: hidden;
+    border-radius: 0.75rem;
+    position: relative;
+    border: 2px solid ${props => props.color};
+`
 
 // 首页
 function About() {
+  const currentTheme = useSelector(selectCurrentTheme)
   return <div className={`flex justify-center items-center`}>
-    <div
-      className={`w-1/2 h-96 border-default-50 border-8 border-solid overflow-hidden bg-default-200 rounded-xl relative`}>
+    {/*`w-1/2 h-96 border-default-50 border-solid overflow-hidden bg-default-200 rounded-xl relative`*/}
+    <AboutBorder color={currentTheme.config.primary}>
       <div className={`w-2/3 h-60 my-4 mx-auto`}>
         <h1 className="mx-auto text-indigo-600 font-bold text-2xl">Welcome to Rei Music</h1> <br/>
         <span className="mt-5 text">
-          Rei Music是一个基于
-          <a href="https://react.dev//" target='_blank'
+          Rei Music基于
+          <a href="https://react.dev//" target='_blank' style={{color: currentTheme.config.primary}}
              className={"no-underline text-default-950 cursor-pointer hover:underline"}>React</a>&
-          <a href="https://nextjs.org/" target='_blank'
+          <a href="https://nextjs.org/" target='_blank' style={{color: currentTheme.config.primary}}
              className={"no-underline text-default-950 cursor-pointer hover:underline"}>Next.js</a>&
-          <a href="https://ant-design.antgroup.com/index-cn" target='_blank'
-             className={"no-underline text-default-950 cursor-pointer hover:underline"}>Ant Design</a>，项目的
-          <a href="https://github.com/xiaoqianling/Rei-Music" target='_blank'
+          <a href="https://mui.com/material-ui/" target='_blank' style={{color: currentTheme.config.primary}}
+             className={"no-underline text-default-950 cursor-pointer hover:underline"}>MUI</a> <br/> 项目的
+          <a href="https://github.com/xiaoqianling/Rei-Music" target='_blank' style={{color: currentTheme.config.primary}}
              className={"no-underline text-default-950 cursor-pointer hover:underline"}>开源地址</a>，感谢支持！
         </span>
       </div>
-      {/*<div className={style.streamers}>
-                <div className={style.streamer} style={{'--i': 1, '--w': 1.5} as React.CSSProperties}>
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                </div>
-                <div className={style.streamer} style={{'--i': 2, '--w': 1.6} as React.CSSProperties}></div>
-                <div className={style.streamer} style={{'--i': 3, '--w': 1.4} as React.CSSProperties}></div>
-                <div className={style.streamer} style={{'--i': 4, '--w': 1.7} as React.CSSProperties}></div>
-                <div className={style.streamer_top} style={{'--i': 1} as React.CSSProperties}></div>
-            </div>*/}
-      {/*<div className={style.QR_Code}>
-            二维码
-      </div>*/}
-    </div>
+    </AboutBorder>
   </div>
 
 

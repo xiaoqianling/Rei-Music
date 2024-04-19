@@ -14,7 +14,7 @@ function Page() {
 
   useEffect(() => {
     setSongList(allSongs)
-  }, [allSongs]);
+  }, [allSongs])
 
   const searchSong = (keyword: string) => {
     const searchResult = allSongs.filter(song => song.name.includes(keyword) || song.singer.includes(keyword))
@@ -22,7 +22,6 @@ function Page() {
   }
 
   const doubleClick = (id: number) => {
-    console.log('切歌id：', id)
     dispatch(cutSongByID(id))
   }
 

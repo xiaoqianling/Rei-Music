@@ -59,10 +59,10 @@ export const audioSlice = createSlice({
     switchPlay: (state) => {
       state.isPlaying = !state.isPlaying
     },
-    setSongDuration: (state, action:PayloadAction<number>) => {
+    setSongDuration: (state, action: PayloadAction<number>) => {
       state.length = action.payload
     },
-    setCurrentTime: (state, action:PayloadAction<number>) => {
+    setCurrentTime: (state, action: PayloadAction<number>) => {
       state.currentTime = action.payload
     },
     setVolume: (state, action: PayloadAction<number>) => {
@@ -74,17 +74,20 @@ export const audioSlice = createSlice({
     cutSongByID: (state, action: PayloadAction<number>) => {
       const song = state.playlist.find(song => song.id === action.payload)
       if (song !== undefined) {
-        // state.isPlaying = true
+        state.isPlaying = true
         state.songID = action.payload
-        state.currentIndex = state.playlist.indexOf(song);
+        state.currentIndex = state.playlist.indexOf(song)
+        state.currentSong = state.playlist[state.currentIndex]
       }
     },
     playNextSong: (state) => {
       state.currentIndex = (state.currentIndex + 1) % state.playlist.length
+      state.currentSong = state.playlist[state.currentIndex]
       state.songID = state.playlist[state.currentIndex].id
     },
     playPrevSong: (state) => {
       state.currentIndex = (state.currentIndex - 1 + state.playlist.length) % state.playlist.length
+      state.currentSong = state.playlist[state.currentIndex]
       state.songID = state.playlist[state.currentIndex].id
     }
   },
@@ -103,11 +106,13 @@ export const audioSlice = createSlice({
           }))
         if (state.playlist.find(song => song.id === state.songID) == undefined) {
           state.songID = state.playlist[0].id
+          state.currentSong = state.playlist[0]
         }
       })
       .addCase(fetchMetadata.rejected, (state, action) => {
         state.status = AudioStatus.FAILED
         state.error = action.error.message
+        state.currentSong = state.playlist[0]
       })
   }
 })

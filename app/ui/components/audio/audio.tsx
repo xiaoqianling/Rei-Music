@@ -5,9 +5,8 @@ import {
   fetchMetadata,
   pause,
   play,
-  playNextSong,
+  playNextSong, selectCurrentSong,
   selectIsPlaying,
-  selectSong,
   selectVolume,
   setCurrentTime,
   setSongDuration,
@@ -24,7 +23,7 @@ function Audio() {
   const isPlaying = useSelector(selectIsPlaying)
   const volume = useSelector(selectVolume)
   // 通过songInfo切歌
-  const songInfo: Song | undefined = useSelector(selectSong)
+  const songInfo: Song | undefined = useSelector(selectCurrentSong)
   const audioRef = useRef<Howl | undefined>(undefined)
   const animationRef = useRef<number>(null!)
   // 由于浏览器限制，在用户交互后才具有播放条件
@@ -36,7 +35,6 @@ function Audio() {
       animationRef.current = requestAnimationFrame(updateTime);
     };
     let sound: Howl | undefined = undefined
-    console.log('playCondition', playCondition ? 'true' : 'false')
     if (songInfo !== undefined && playCondition) {
       // 满足条件 开始播放
       let songSrc: string
@@ -72,7 +70,7 @@ function Audio() {
     console.warn("播放音乐-", new Date().toLocaleString())
     audioRef.current = sound
     return () => {
-      sound?.stop()
+      audioRef.current?.unload()
       cancelAnimationFrame(animationRef.current)
     }
   }, [dispatch, songInfo, playCondition])
@@ -108,7 +106,8 @@ function Audio() {
 
   //  右键显示操作
   return (
-    <div className={"flex flex-col h-full w-full bg-default-300"}>
+    // bg-default-300
+    <div className={"flex flex-col h-full w-full"}>
       <AudioSlider audio={audioRef.current}/>
       <div className={"w-full flex flex-grow-[1] items-center justify-between py-0 px-10"}>
         <div className={"flex ml-0 w-60 py-0.5"}>
