@@ -10,9 +10,9 @@ function AudioInfo() {
       <Image className="rounded"
              src={'/girl.jpg'} alt={'专辑封面'} width={48} height={48}/>
       <div className={"flex flex-col w-full"}>
-        <div>
-          <span className={"text-xs"}>{song?.name}</span>
-          <span className={"text-xs"}> - {song?.singer}</span>
+        <div className={"whitespace-nowrap"}>
+          <span className={"text-xs overflow-ellipsis"}>{song?.name}</span>
+          <span className={"text-xs overflow-ellipsis"}> - {song?.singer}</span>
         </div>
         <div className={"w-full"}>
           操作区

@@ -12,11 +12,11 @@ import {
   setSongDuration,
 } from "@/lib/redux/slices";
 import {Howl} from "howler";
-import {Song} from "@/lib/types/song";
 import AudioSlider from "@/app/ui/components/audio/audio-slider";
 import AudioInfo from "@/app/ui/components/audio/audio-info";
 import {AudioOperation} from "@/app/ui/components/audio/audio-operate";
 import AudioProgress from "@/app/ui/components/audio/audio-progress";
+import {Song} from "@/lib/types/songs";
 
 function Audio() {
   const dispatch = useDispatch()
@@ -37,13 +37,7 @@ function Audio() {
     let sound: Howl | undefined = undefined
     if (songInfo !== undefined && playCondition) {
       // 满足条件 开始播放
-      let songSrc: string
-      if (songInfo.localAudioSrc) {
-        songSrc = songInfo.localAudioSrc
-      } else {
-        songSrc = songInfo.url!
-      }
-      console.log('song info:', songSrc)
+      let songSrc: string = songInfo.song_url
       sound = new Howl({
         src: songSrc,
         onplay: () => {
@@ -67,7 +61,6 @@ function Audio() {
         }
       })
     }
-    console.warn("播放音乐-", new Date().toLocaleString())
     audioRef.current = sound
     return () => {
       audioRef.current?.unload()
