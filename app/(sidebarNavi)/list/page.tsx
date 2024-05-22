@@ -1,5 +1,5 @@
 'use client'
-import React, {useEffect, useState} from 'react';
+import React, {Suspense, useEffect, useState} from 'react';
 import {useDispatch, useSelector} from "@/lib/redux/store";
 import {cutSongByID, selectPlaylist} from "@/lib/redux/slices";
 import SearchInput from "@/app/ui/layout/top/search-input";
@@ -28,7 +28,10 @@ function Page() {
   return (
     <div>
       <SearchInput onSearch={searchSong}/>
+      <Suspense fallback={<div>列表错误</div>}>
       <Songlist/>
+      </Suspense>
+
     </div>
   );
 }
