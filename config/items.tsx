@@ -47,8 +47,8 @@ export const items = [
         icon: <Computer/>
       },
       {
-        label: (<Link href={'recent'}>最近播放</Link>),
-        key: 'recent',
+        label: (<Link href={'result'}>最近播放</Link>),
+        key: 'result',
         icon: <Clock/>
       },
       {

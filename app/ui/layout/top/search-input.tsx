@@ -1,7 +1,9 @@
+'use client'
 import React, {FC, useState} from 'react';
 import {Search} from "@/app/ui/components/icons/homeIcons";
 import {useSelector} from "@/lib/redux/store";
 import {selectCurrentTheme} from "@/lib/redux/slices";
+import {redirect, useRouter} from "next/navigation";
 
 interface Props {
   onSearch?: (keyword: string) => void
@@ -10,13 +12,16 @@ interface Props {
 const SearchInput: FC<Props> = ({onSearch}) => {
   const [inputValue, setInputValue] = useState<string>('')
   const currentTheme = useSelector(selectCurrentTheme)
+  const router = useRouter()
   const searchSong = (e: any) => {
     if (inputValue === '') {
+      // todo 提示输入空
       onSearch && onSearch(inputValue)
     } else {
       console.log("搜索歌曲:", inputValue)
       onSearch && onSearch(inputValue)
       e.target.blur()
+      router.push(`/result?keyword=${inputValue}`)
     }
   }
 

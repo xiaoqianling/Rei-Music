@@ -1,4 +1,4 @@
-export interface Song {
+export interface LocalSong {
   name: string,
   singer: string,
   lyricist?: string,
@@ -11,7 +11,7 @@ export interface Song {
   length?: number
 }
 
-export const localSong: Song[] = [
+export const localSong: LocalSong[] = [
   {
     name: "天知河",
     singer: "说说Crystal",
@@ -34,7 +34,7 @@ export const localSong: Song[] = [
 ]
 
 
-export const serverSong: Song[] = [
+export const serverSong: LocalSong[] = [
   {
     name: "天知河",
     singer: "说说Crystal",

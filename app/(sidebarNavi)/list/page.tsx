@@ -2,9 +2,9 @@
 import React, {useEffect, useState} from 'react';
 import {useDispatch, useSelector} from "@/lib/redux/store";
 import {cutSongByID, selectPlaylist} from "@/lib/redux/slices";
-import {Song} from "@/lib/types/song";
 import SearchInput from "@/app/ui/layout/top/search-input";
 import Songlist from "@/app/ui/components/list/songlist";
+import {Song} from "@/lib/types/songs";
 
 function Page() {
   // songlist用于渲染列表
@@ -21,14 +21,14 @@ function Page() {
     setSongList(searchResult)
   }
 
-  const doubleClick = (id: number) => {
-    dispatch(cutSongByID(id))
+  const doubleClick = (song:Song) => {
+    dispatch(cutSongByID(song))
   }
 
   return (
     <div>
       <SearchInput onSearch={searchSong}/>
-      <Songlist list={songList} onDoubleClick={doubleClick}/>
+      <Songlist/>
     </div>
   );
 }

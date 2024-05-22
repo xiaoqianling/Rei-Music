@@ -14,12 +14,21 @@ import {
   SliderTrack
 } from "@chakra-ui/react";
 import {useDispatch, useSelector} from "@/lib/redux/store";
-import {playNextSong, playPrevSong, selectIsPlaying, selectVolume, setVolume, switchPlay} from "@/lib/redux/slices";
+import {
+  playNextSong,
+  playPrevSong,
+  selectCurrentTheme,
+  selectIsPlaying,
+  selectVolume,
+  setVolume,
+  switchPlay
+} from "@/lib/redux/slices";
 
 export function AudioOperation() {
   const dispatch = useDispatch()
   const isPlaying = useSelector(selectIsPlaying);
   const volume = useSelector(selectVolume);
+  const currentTheme = useSelector(selectCurrentTheme)
   const onSwitch = () => {
     dispatch(switchPlay())
   }
@@ -42,14 +51,14 @@ export function AudioOperation() {
         <PopoverTrigger>
           <span className="cursor-pointer"><Voice/></span>
         </PopoverTrigger>
-        <PopoverContent className="bg-default-50 p-0" bgColor={"lightgreen"} width={8} border={"none"}
+        <PopoverContent className="p-0" style={{backgroundColor:currentTheme.config.primary}} bgColor={"lightgreen"} width={8} border={"none"}
                         textAlign={"center"}>
           <PopoverArrow/>
           <PopoverHeader>
             <Slider aria-label='slider-ex-1' value={volume} minH={20} onChange={(value) => dispatch(setVolume(value))}
                     max={1} step={0.01}
                     orientation={"vertical"}>
-              <SliderTrack bg={'lightpink'}>
+              <SliderTrack bg={currentTheme.config.sidebg}>
                 <SliderFilledTrack/>
               </SliderTrack>
               <SliderThumb boxSize="2"/>
