@@ -1,9 +1,9 @@
 // 'use client'
-import React from 'react';
+import React, {Suspense} from 'react';
 import {fetchUsers} from "@/lib/storage/data";
 import Songlist from "@/app/ui/components/list/songlist";
 
-async function getData(keyword:string) {
+async function getData(keyword: string) {
   return await fetchUsers()
 }
 
@@ -16,7 +16,9 @@ async function Page() {
   return (
     <div>
       查询结果
-      <Songlist/>
+      <Suspense fallback={<div>列表错误</div>}>
+        <Songlist/>
+      </Suspense>
     </div>
   );
 }
