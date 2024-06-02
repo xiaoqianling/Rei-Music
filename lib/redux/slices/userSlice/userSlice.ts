@@ -149,7 +149,7 @@ export const userSlice = createSlice({
     },
     logoutUser: (state) => {
       state.displayName = '测试账号'
-      // state.login = false;
+      state.login = false;
       // state.username = '';
       // state.id = -1
       // state.createPlaylist = []

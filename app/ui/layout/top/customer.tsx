@@ -285,8 +285,8 @@ function UserLogout() {
   const logout = () => {
     if (isLogin) {
       onClose()
-      dispatch(logoutUser)
-      // localStorage.removeItem('userInfo')
+      dispatch(logoutUser())
+      localStorage.removeItem('userInfo')
     }
   }
   return <Popover onClose={onClose} onOpen={onOpen} isOpen={isOpen}>

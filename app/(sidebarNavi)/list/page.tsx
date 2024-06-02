@@ -21,17 +21,17 @@ function Page() {
     setSongList(searchResult)
   }
 
-  const doubleClick = (song:Song) => {
+  const doubleClick = (song: Song) => {
     dispatch(cutSongByID(song.id))
   }
 
   return (
     <div>
       <SearchInput onSearch={searchSong}/>
+      <h3 className={"mb-3 text-xl"}>一共就这么点.</h3>
       <Suspense fallback={<div>列表错误</div>}>
-      <CurrentSonglist/>
+        <CurrentSonglist/>
       </Suspense>
-
     </div>
   );
 }

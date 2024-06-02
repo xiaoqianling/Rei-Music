@@ -6,6 +6,7 @@ import UploadButton from "@/app/ui/upload/upload-button";
 import Button from "@/app/ui/components/button";
 import axios from "axios";
 import {fetchMetadata} from "@/lib/redux/slices";
+import {serverUrl} from "@/lib/api/music-api";
 
 
 const Page: React.FC = () => {
@@ -21,7 +22,7 @@ const Page: React.FC = () => {
     event.preventDefault()
     const formData = new FormData();
     if (name && singer) {
-      formData.append('name', name);
+      formData.append('songName', name);
       formData.append('singer', singer);
     } else {
       setVerifyFiled(true);
@@ -30,7 +31,7 @@ const Page: React.FC = () => {
     album && formData.append('album', album);
     composer && formData.append('composer', composer);
     file && formData.append('file', file);
-    axios.put("http://localhost:8080/api/music/file/withInfo", formData,
+    axios.post(serverUrl + "/Song/upload", formData,
       {headers: {"Content-Type": "multipart/form-data"}})
       .then(response => response.data)
       .then(data => {
