@@ -14,7 +14,7 @@ function Logo() {
   }
 
   return (
-    <div className={"w-fit py-3 ml-3 flex items-center font-bold text-xl cursor-pointer"} onClick={handleBackHome}>
+    <div className={"w-72 py-3 ml-3 flex items-center font-bold text-xl cursor-pointer"} onClick={handleBackHome}>
       <Icon size={40}/>
       <span className="md:text-2xl">Rei Music</span>
     </div>

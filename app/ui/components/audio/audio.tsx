@@ -5,7 +5,8 @@ import {
   fetchMetadata,
   pause,
   play,
-  playNextSong, selectCurrentSong,
+  playNextSong,
+  selectCurrentSong,
   selectIsPlaying,
   selectVolume,
   setCurrentTime,
@@ -17,6 +18,7 @@ import AudioInfo from "@/app/ui/components/audio/audio-info";
 import {AudioOperation} from "@/app/ui/components/audio/audio-operate";
 import AudioProgress from "@/app/ui/components/audio/audio-progress";
 import {Song} from "@/lib/types/songs";
+import {serverUrl} from "@/lib/api/music-api";
 
 function Audio() {
   const dispatch = useDispatch()
@@ -37,9 +39,11 @@ function Audio() {
     let sound: Howl | undefined = undefined
     if (songInfo !== undefined && playCondition) {
       // 满足条件 开始播放
-      let songSrc: string = songInfo.song_url
+      let songSrc: string = serverUrl+'/song/id/'+songInfo.id
       sound = new Howl({
         src: songSrc,
+        // 通过音频流播放
+        format: ['ogg', 'mp3'],
         onplay: () => {
           dispatch(play())
           animationRef.current = requestAnimationFrame(updateTime)

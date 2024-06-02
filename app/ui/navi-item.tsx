@@ -22,7 +22,7 @@ const LinkWrapActive = styled(LinkWrapBase)`
     background-color: ${props => props.color};
 `
 
-const LinkWrapHover = styled(LinkWrapBase)`
+export const LinkWrapHover = styled(LinkWrapBase)`
     &:hover {
         background-color: ${props => props.color};
     }
@@ -35,8 +35,7 @@ const NaviItem: React.FC<Props> = ({icon, title, url}) => {
   return (
     <>
       {isActive ?
-        <LinkWrapActive color={currentTheme.config.active}>
-          {/*hover:bg-default-300 px-3 w-48 rounded mx-4 py-2 my-0.5 cursor-pointer*/}
+        <LinkWrapActive color={currentTheme.config.active} className="w-20 m-0 p-0">
           <Link className="flex items-center"
                 href={url}>
             <span>{icon}</span>

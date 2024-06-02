@@ -9,10 +9,9 @@ export const selectIsPlaying = (state: ReduxState): boolean => {
 export const selectPlaylist = (state: ReduxState): Song[] => {
   return state.audio.playlist
 }
-// export const selectSongId = (state: ReduxState): number => {
-//   // console.log('selectSongId selector!')
-//   return state.audio.songID
-// }
+export const selectSongId = (state: ReduxState): number => {
+  return state.audio.songID
+}
 
 /*
  * @return 若无播放歌曲返回undefined
@@ -22,11 +21,11 @@ export const selectCurrentSong = (state: ReduxState): Song | undefined => state.
 export const selectVolume = (state: ReduxState): number => state.audio.volume;
 export const selectCurrentTime = (state: ReduxState): number => state.audio.currentTime;
 export const selectLength = (state: ReduxState): number => state.audio.length;
-// createSelector(
-//   [selectPlaylist, selectSongId],
-//   (playlist, id) => {
-//     if (playlist.length === 0)
-//       return undefined;
-//     return playlist.find(song => song.id === id);
-//   }
-// )
+createSelector(
+  [selectPlaylist, selectSongId],
+  (playlist, id) => {
+    if (playlist.length === 0)
+      return undefined;
+    return playlist.find(song => song.id === id);
+  }
+)

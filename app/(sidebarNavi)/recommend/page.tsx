@@ -1,16 +1,34 @@
-import React from 'react';
-import {Card} from "@/app/ui/components/card";
+'use client'
+import React, {useEffect, useState} from 'react';
+import axios from "axios";
+import {serverUrl} from "@/lib/api/music-api";
+import {Playlist} from "@/lib/types/songs";
+import PlaylistList from "@/app/ui/components/list/playlistList";
+import {useSelector} from "@/lib/redux/store";
+import {selectUserDisplayName} from "@/lib/redux/slices";
 
 function Page() {
-// https://cdn.pixabay.com/photo/2023/07/01/15/46/flowers-8100386_1280.jpg
+  const [playlistData, setPlaylistData] = useState<Playlist[]>([]);
+  const displayName = useSelector(selectUserDisplayName)
+
+  // 在组件加载后获取歌单数据
+  useEffect(() => {
+    axios.get(serverUrl + '/song/allPlaylist')
+      .then(response => {
+        setPlaylistData(response.data)
+      })
+      .catch(error => {
+        console.error('Error fetching playlist data:', error);
+      });
+  }, []);
+
   return (
-    <div>
+    <div className="h-fit">
       <h1 className={"mb-4 text-3xl"}>推荐</h1>
-      <h3 className={"mb-3 text-xl"}>Hi 千灵 今日为你推荐</h3>
-      <Card description={'测试描述'}
-            url={'https://img9.vilipix.com/picture/pages/regular/2022/08/31/14/102210467_p0_master1200.jpg?x-oss-process=image/resize,m_fill,w_1000'}/>
+      <h3 className={"mb-3 text-xl"}>Hi {displayName} 今日为你推荐</h3>
+      <PlaylistList playlist={playlistData}/>
     </div>
-  );
+  )
 }
 
 export default Page;

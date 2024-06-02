@@ -1,6 +1,7 @@
 import {createAsyncThunk, createSlice, PayloadAction} from "@reduxjs/toolkit";
 import axios from "axios";
 import {Song} from "@/lib/types/songs";
+import {serverUrl} from "@/lib/api/music-api";
 
 export enum AudioStatus {
   IDLE,
@@ -13,6 +14,8 @@ export interface AudioData {
   playlist: Song[],
   // 音乐在数组内索引
   currentIndex: number,
+  // 当前的id
+  songID: number,
   currentSong: Song | undefined,
   isPlaying: boolean,
   volume: number,
@@ -24,18 +27,10 @@ export interface AudioData {
 }
 
 const initialState: AudioData = {
-  playlist: [
-    {
-      "name": "买辣椒也用券 - 起风了",
-      "singer": "买辣椒也用券",
-      "duration": 325,
-      "file_size": "0 MB",
-      "song_url": "https://sharefs.tx.kugou.com/202405222050/9513bac6823f94b87d17c6325b267b62/v3/5c035cbf390fef6b536020a57749ef70/yp/full/a1000_u0_p409_s3779613493.mp3",
-      "album_img": ""
-    }
-  ],
+  playlist: [],
   // 当前播放歌曲index
   currentIndex: 0,
+  songID: 0,
   currentSong: undefined,
   isPlaying: false,
   volume: 0.03,
@@ -44,43 +39,12 @@ const initialState: AudioData = {
   status: AudioStatus.IDLE,
 }
 
-async function getSongInfo(response: any) {
-  let songs: Song[] = [
-
-  ]
-  response.data.map((d: any) => console.log(d))
-  // response.data.map(async (d: any) => {
-  //   console.log(d.name)
-  //   const [minutes, seconds] = d.duration.split(":").map(Number);
-  //   const totalSeconds = minutes * 60 + seconds;
-  //   let exist: boolean = true
-  //   // TODO url 和其他信息
-  //   console.log('url:', `https://dataiqs.com/api/kgmusic/?msg=${encodeURIComponent(d.name)}&type=&n=0`)
-  //   const url = await axios.get(`https://dataiqs.com/api/kgmusic/?msg=${encodeURIComponent(d.name)}&type=&n=0`).then((data: any) => data?.song_url).catch((reason) => {
-  //     console.log(`不存在${d.name}的信息`)
-  //     exist = false
-  //   })
-  //   if (url !== '' && url !== '付费歌曲暂时无法获取歌曲下载链接') {
-  //     exist = false
-  //     console.log(`歌曲${d.name}信息不可知`)
-  //   }
-  //   if (exist)
-  //     songs.push({
-  //       album_img: d.album_img,
-  //       duration: totalSeconds,
-  //       file_size: d.file_size,
-  //       song_url: url,
-  //       singer: d.singername, name: d.name,
-  //     })
-  // })
-  return songs
-}
-
 export const fetchMetadata = createAsyncThunk<Song[]>("audio/fetchMetadata",
   async () => {
-    //&type=&n=0
-    const response = await axios.get(`https://dataiqs.com/api/kgmusic/?msg=${encodeURIComponent("卡农")}`).then(data => data.data)
-    return response
+    // 获取所有音乐 加入播放列表
+    return await axios(serverUrl + '/Song/AllSongs').then(d => {
+      return d.data
+    })
   })
 
 export const audioSlice = createSlice({
@@ -109,21 +73,24 @@ export const audioSlice = createSlice({
     /**
      * 播放指定id的歌曲
      */
-    cutSongByID: (state, action: PayloadAction<Song>) => {
-      const song = state.playlist.find(song => song === action.payload)
+    cutSongByID: (state, action: PayloadAction<number>) => {
+      const song = state.playlist.find(song => song.id === action.payload)
       if (song !== undefined) {
         state.isPlaying = true
         state.currentIndex = state.playlist.indexOf(song)
         state.currentSong = state.playlist[state.currentIndex]
+        state.songID = state.currentSong.id
       }
     },
     playNextSong: (state) => {
       state.currentIndex = (state.currentIndex + 1) % state.playlist.length
       state.currentSong = state.playlist[state.currentIndex]
+      state.songID = state.currentSong.id
     },
     playPrevSong: (state) => {
       state.currentIndex = (state.currentIndex - 1 + state.playlist.length) % state.playlist.length
       state.currentSong = state.playlist[state.currentIndex]
+      state.songID = state.currentSong.id
     }
   },
   extraReducers: (builder) => {
@@ -133,9 +100,9 @@ export const audioSlice = createSlice({
       })
       .addCase(fetchMetadata.fulfilled, (state, action) => {
         state.status = AudioStatus.SUCCEED
-        // state.playlist = action.payload.data
+        state.playlist = action.payload
         state.currentSong = state.playlist[0]
-        // }
+        state.songID = state.currentSong.id
       })
       .addCase(fetchMetadata.rejected, (state, action) => {
         state.status = AudioStatus.FAILED

@@ -3,7 +3,7 @@ import React, {FC, useState} from 'react';
 import {Search} from "@/app/ui/components/icons/homeIcons";
 import {useSelector} from "@/lib/redux/store";
 import {selectCurrentTheme} from "@/lib/redux/slices";
-import {redirect, useRouter} from "next/navigation";
+import {useRouter} from "next/navigation";
 
 interface Props {
   onSearch?: (keyword: string) => void
@@ -21,7 +21,7 @@ const SearchInput: FC<Props> = ({onSearch}) => {
       console.log("搜索歌曲:", inputValue)
       onSearch && onSearch(inputValue)
       e.target.blur()
-      router.push(`/result?keyword=${inputValue}`)
+      router.push(`/result/${inputValue}`)
     }
   }
 

@@ -3,7 +3,7 @@ import React, {Suspense, useEffect, useState} from 'react';
 import {useDispatch, useSelector} from "@/lib/redux/store";
 import {cutSongByID, selectPlaylist} from "@/lib/redux/slices";
 import SearchInput from "@/app/ui/layout/top/search-input";
-import Songlist from "@/app/ui/components/list/songlist";
+import CurrentSonglist from "@/app/ui/components/list/currentSonglist";
 import {Song} from "@/lib/types/songs";
 
 function Page() {
@@ -22,14 +22,14 @@ function Page() {
   }
 
   const doubleClick = (song:Song) => {
-    dispatch(cutSongByID(song))
+    dispatch(cutSongByID(song.id))
   }
 
   return (
     <div>
       <SearchInput onSearch={searchSong}/>
       <Suspense fallback={<div>列表错误</div>}>
-      <Songlist/>
+      <CurrentSonglist/>
       </Suspense>
 
     </div>
