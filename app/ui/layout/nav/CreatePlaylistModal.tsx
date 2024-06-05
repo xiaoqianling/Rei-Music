@@ -36,6 +36,7 @@ function CreatePlaylistModal() {
       console.log("输入为空")
       return
     }
+    console.log({userId, name})
     dispatch(createPlaylist({userId, name}))
   }
 
