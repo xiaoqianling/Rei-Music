@@ -24,7 +24,7 @@ const Layout = ({children}: {
           style={{backgroundColor: currentTheme.config.sidebg}}>
           <SideNav/>
         </nav>
-        <main className="overflow-y-auto min-h-full p-8 w-full"
+        <main className="overflow-y-auto min-h-full p-6 w-full"
               style={{backgroundColor: currentTheme.config.mainbg}}>
           {/* 主页 */}
           {children}

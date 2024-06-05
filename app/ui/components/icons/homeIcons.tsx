@@ -158,13 +158,36 @@ export function Radar({size = 20, borderSize, color}: HomeIcons.BaseProps) {
 
 export function Like({size = 20, borderSize, color}: HomeIcons.BaseProps) {
   return <IconContainer size={borderSize}>
-    <svg d="1692768715104" className="icon" viewBox="0 0 1126 1024" version="1.1" xmlns="http://www.w3.org/2000/svg"
-         p-id="13694" width={size} height={size}>
+    <svg width="24" height="24" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
       <path
-        d="M93.2352 552.6528A332.8 332.8 0 0 1 472.7808 28.3648h-0.1024L255.488 245.6576l72.3968 72.3968 217.1904-217.1904a332.8 332.8 0 0 1 470.6816 470.6304L563.2 1024l-470.6304-470.6304 0.6656-0.7168z"
-        fill={color ? color : '#000'} p-id="13695"></path>
+        d="M15 8C8.92487 8 4 12.9249 4 19C4 30 17 40 24 42.3262C31 40 44 30 44 19C44 12.9249 39.0751 8 33 8C29.2797 8 25.9907 9.8469 24 12.6738C22.0093 9.8469 18.7203 8 15 8Z"
+        fill="none" stroke="#333" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round"/>
     </svg>
   </IconContainer>
+}
+
+export function LikeActive({size = 20, borderSize, color}: HomeIcons.BaseProps) {
+  return <IconContainer size={borderSize}>
+    <svg width="24" height="24" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path
+        d="M15 8C8.92487 8 4 12.9249 4 19C4 30 17 40 24 42.3262C31 40 44 30 44 19C44 12.9249 39.0751 8 33 8C29.2797 8 25.9907 9.8469 24 12.6738C22.0093 9.8469 18.7203 8 15 8Z"
+        fill="red" stroke="red" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round"/>
+    </svg>
+  </IconContainer>
+}
+
+export function ListAdd({size = 20, borderSize, color}: HomeIcons.BaseProps) {
+  return <IconContainer size={borderSize}>
+    <svg width="24" height="24" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M8 28H24" stroke="#333" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round"/>
+      <path d="M8 37H24" stroke="#333" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round"/>
+      <path d="M8 19H40" stroke="#333" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round"/>
+      <path d="M8 10H40" stroke="#333" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round"/>
+      <path d="M30 33H40" stroke="#333" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round"/>
+      <path d="M35 28L35 38" stroke="#333" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round"/>
+    </svg>
+  </IconContainer>
+
 }
 
 export function Computer({size = 20, borderSize, color}: HomeIcons.BaseProps) {

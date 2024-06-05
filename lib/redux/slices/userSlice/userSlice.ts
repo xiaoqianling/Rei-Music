@@ -1,7 +1,12 @@
-import {createAsyncThunk, createSlice, PayloadAction} from "@reduxjs/toolkit";
-import axios from "axios";
-import {serverUrl} from "@/lib/api/music-api";
-import {Playlist} from "@/lib/types/songs";
+import {createSlice, PayloadAction} from "@reduxjs/toolkit";
+import {Playlist, Song} from "@/lib/types/songs";
+import {
+  createPlaylist,
+  fetchUserCreatePlaylist,
+  fetchUserFavoriteSongs,
+  loginUser,
+  signupUser
+} from "@/lib/redux/slices/userSlice/chunk";
 
 export enum LoginStatus {
   Fail, Success, Null
@@ -19,6 +24,7 @@ export interface User {
   displayName: string
   id: number
   createPlaylist: Playlist[]
+  favoriteSongs: Song[]
   password: string
 }
 
@@ -36,127 +42,9 @@ const initialState: User = {
   displayName: '未登录用户',
   id: -1,
   createPlaylist: [],
+  favoriteSongs: [],
   password: ''
 }
-
-export const loginUser = createAsyncThunk(
-  'user/loginUser',
-  async (loginInfo: LoginInfo, {rejectWithValue, dispatch}) => {
-    try {
-      let response;
-      // 用邮箱还是用用户名登录
-      if (loginInfo.username.includes('@')) {
-        response = await axios.post(serverUrl + '/user/loginwithemail', {
-          email: loginInfo.username,
-          password: loginInfo.password
-        }).catch((reason) => {
-            console.log('登录失败')
-            return reason
-          }
-        )
-      } else {
-        response = await axios.post(serverUrl + '/user/loginwithusername', {
-          username: loginInfo.username,
-          password: loginInfo.password
-        }).catch((reason) => {
-            console.log('登录失败')
-            return reason
-          }
-        )
-      }
-      if (response.status === 200) {
-        dispatch(fetchUserCreatePlaylist(response.data.id));
-        return response.data;
-      } else {
-        return rejectWithValue('登录失败');
-      }
-    } catch (error) {
-      return rejectWithValue('登录失败');
-    }
-  }
-)
-
-export const signupUser = createAsyncThunk(
-  'user/signup',
-  async (loginInfo: LoginInfo, {rejectWithValue, fulfillWithValue}) => {
-    //注册
-    try {
-      // 用邮箱注册
-      if (loginInfo.username.includes('@')) {
-        try {
-          const response = await axios.put(serverUrl + '/user/signupByEmail', {
-            displayName: loginInfo.displayName,
-            email: loginInfo.username,
-            password: loginInfo.password
-          })
-          if (response.status === 200) {
-            return fulfillWithValue(response.data);
-          } else {
-            return rejectWithValue("邮箱已存在");
-          }
-        } catch (e) {
-          return rejectWithValue("邮箱已存在");
-        }
-      } else {
-        try {
-          const response = await axios.put(serverUrl + '/user/signupByUsername', {
-            displayName: loginInfo.displayName,
-            username: loginInfo.username,
-            password: loginInfo.password
-          })
-          if (response.status === 200) {
-            return fulfillWithValue(response.data);
-          } else {
-            return rejectWithValue("用户名已存在");
-          }
-        } catch (e) {
-          return rejectWithValue("用户名已存在");
-        }
-      }
-    } catch
-      (error) {
-      return rejectWithValue('注册失败 原因未知');
-    }
-  }
-)
-
-// 创建一个用于获取用户创建歌单
-export const fetchUserCreatePlaylist = createAsyncThunk(
-  'user/fetchUserCreatePlaylist',
-  async (userId: number, {rejectWithValue}) => {
-    try {
-      const response = await axios.get(serverUrl + '/user/createPlaylist?uid=' + userId);
-      if (response.status === 200) {
-        return response.data;
-      } else {
-        return rejectWithValue('获取用户歌单失败');
-      }
-    } catch (error) {
-      return rejectWithValue('获取用户歌单失败');
-    }
-  }
-);
-
-// 创建歌单
-export const createPlaylist = createAsyncThunk(
-  'user/createPlaylist',
-  async ({userId, name}: { userId: number, name: string }, {rejectWithValue, dispatch, fulfillWithValue}) => {
-    try {
-      const response = await axios.post(serverUrl + '/user/createPlaylist', {
-        uid: userId,
-        playlistName: name
-      });
-      if (response.status === 200) {
-        dispatch(fetchUserCreatePlaylist(userId))
-        return response.data;
-      } else {
-        return rejectWithValue('创建歌单完成');
-      }
-    } catch (error) {
-      return rejectWithValue('创建歌单失败');
-    }
-  }
-)
 
 export const userSlice = createSlice({
   name: 'user',
@@ -178,6 +66,7 @@ export const userSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
+      // 登录逻辑
       .addCase(loginUser.fulfilled, (state, action) => {
         state.login = true;
         state.displayName = action.payload.displayName
@@ -190,9 +79,9 @@ export const userSlice = createSlice({
         console.log('登陆失败')
         state.status = LoginStatus.Fail
       })
+      // 注册逻辑
       .addCase(signupUser.fulfilled, (state, action) => {
         console.log(action.payload)
-        // 注册完成的逻辑
         state.login = true;
         state.signupStatus = SignupStatus.OK
         state.id = action.payload.id
@@ -210,12 +99,16 @@ export const userSlice = createSlice({
         else
           state.signupStatus = SignupStatus.Unknown
       })
-      // 在用户登陆后 查询歌单信息
+      // 查询创建歌单
       .addCase(fetchUserCreatePlaylist.fulfilled, (state, action) => {
         state.createPlaylist = action.payload;
       })
       .addCase(createPlaylist.fulfilled, (state, action) => {
 
+      })
+      // 查询收藏音乐
+      .addCase(fetchUserFavoriteSongs.fulfilled, (state, action) => {
+        state.favoriteSongs = action.payload
       })
   }
 });

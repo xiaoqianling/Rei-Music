@@ -20,7 +20,6 @@ const UploadButton: FC<Props> = ({onChange, className, acceptFileType}) => {
       <Button onClick={handleUploadButton}>
         选择文件
       </Button>
-      <span>{file_input.current?.files && file_input.current?.files[0] && file_input.current.files[0].name}</span>
     </div>
   );
 }

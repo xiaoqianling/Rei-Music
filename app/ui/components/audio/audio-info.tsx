@@ -14,7 +14,6 @@ function AudioInfo() {
           <span className={"overflow-ellipsis overflow-hidden whitespace-nowrap break-all"}> - {song?.singer}</span>
       </div>
       <div>
-        ♥
       </div>
     </div>
   );

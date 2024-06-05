@@ -1,22 +1,23 @@
 'use client'
 import React, {useState} from 'react';
-import {FormLabel, ModalFooter} from "@chakra-ui/react";
-import Link from "next/link";
-import {LinkWrapHover} from "@/app/ui/navi-item";
-import {useDispatch, useSelector} from "@/lib/redux/store";
-import {createPlaylist, selectCreatePlaylist, selectCurrentTheme, selectUserId} from "@/lib/redux/slices";
 import {
-  Button,
   FormControl,
   Input,
   Modal,
   ModalBody,
   ModalCloseButton,
   ModalContent,
+  ModalFooter,
   ModalHeader,
   ModalOverlay,
-  useDisclosure,
+  useDisclosure
 } from "@chakra-ui/react";
+import Link from "next/link";
+import {LinkWrapHover} from "@/app/ui/navi-item";
+import {useDispatch, useSelector} from "@/lib/redux/store";
+import {selectCurrentTheme, selectUserId} from "@/lib/redux/slices";
+import Button from "@/app/ui/components/button";
+import {createPlaylist} from "@/lib/redux/slices/userSlice/chunk";
 
 function CreatePlaylistModal() {
   const currentTheme = useSelector(selectCurrentTheme)
@@ -33,11 +34,10 @@ function CreatePlaylistModal() {
 
   const handleCreatePlaylist = () => {
     if (name == '') {
-      console.log("输入为空")
       return
     }
-    console.log({userId, name})
     dispatch(createPlaylist({userId, name}))
+    onClose()
   }
 
   return (
@@ -64,14 +64,15 @@ function CreatePlaylistModal() {
             <FormControl>
               <div className="font-bold mb-3">歌单名称</div>
               <Input placeholder='请输入歌单名' type={"text"} className="mb-3" ref={initialRef} value={name}
+                     focusBorderColor={currentTheme.config.primary}
                      onChange={(e) => {
                        setName(e.target.value)
                      }}/>
             </FormControl>
           </ModalBody>
 
-          <ModalFooter>
-            <Button colorScheme='blue' mr={3} onClick={handleCreatePlaylist}>
+          <ModalFooter >
+            <Button onClick={handleCreatePlaylist} primary className="mr-5">
               创建
             </Button>
             <Button onClick={onClose}>取消</Button>

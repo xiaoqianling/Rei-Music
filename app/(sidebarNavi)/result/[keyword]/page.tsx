@@ -6,7 +6,7 @@ import {notFound} from "next/navigation";
 import {Playlist, Song} from "@/lib/types/songs";
 import Songlist from "@/app/ui/components/list/Songlist";
 import {Card} from "@/app/ui/components/card";
-import PlaylistList from "@/app/ui/components/list/playlistList";
+import PlaylistCardList from "@/app/ui/components/list/playlistCardList";
 
 // 搜索结果页面
 function Page({params}: { params: { keyword: string } }) {
@@ -54,7 +54,7 @@ function Page({params}: { params: { keyword: string } }) {
       {playlist.length === 0 ? <h3 className={"mb-3 text-xl font-bold"}>未搜索到相关歌单</h3> :
         <>
           <h3 className={"mb-3 text-lg"}>搜索到的歌单</h3>
-          <PlaylistList playlist={playlist}/>
+          <PlaylistCardList playlist={playlist}/>
         </>
       }
 

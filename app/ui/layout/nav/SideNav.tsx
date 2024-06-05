@@ -4,7 +4,7 @@ import NaviItem, {LinkWrapHover} from "@/app/ui/navi-item";
 import {MusicList, Recommend} from "@/app/ui/components/icons/homeIcons";
 import {useSelector} from "@/lib/redux/store";
 import {selectCreatePlaylist, selectCurrentTheme, selectIsLogin} from "@/lib/redux/slices";
-import {Divider, useDisclosure} from "@chakra-ui/react";
+import {Divider} from "@chakra-ui/react";
 import Link from "next/link";
 import CreatePlaylistModal from "@/app/ui/layout/nav/CreatePlaylistModal";
 

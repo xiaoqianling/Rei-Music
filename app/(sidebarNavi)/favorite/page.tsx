@@ -1,36 +1,23 @@
 'use client'
-import React, {useEffect, useState} from 'react';
-import {Song} from "@/lib/types/songs";
-import axios from "axios";
-import {serverUrl} from "@/lib/api/music-api";
-import {notFound} from "next/navigation";
+import React, {useEffect} from 'react';
 import Songlist from "@/app/ui/components/list/Songlist";
-import {useSelector} from "@/lib/redux/store";
-import {selectUserId} from "@/lib/redux/slices";
+import {useDispatch, useSelector} from "@/lib/redux/store";
+import {selectFavoriteSongs, selectUserId} from "@/lib/redux/slices";
+import {fetchUserFavoriteSongs} from "@/lib/redux/slices/userSlice/chunk";
 
 // 收藏音乐
 function Page() {
-  const [songs, setSongs] = useState<Song[]>([])
+  const dispatch = useDispatch()
   const userId = useSelector(selectUserId)
+  const favoriteSongs = useSelector(selectFavoriteSongs)
 
   useEffect(() => {
-    axios.get(serverUrl + '/User/getFavoriteSongs?uid=' + userId)
-      .then(response => {
-        setSongs(response.data)
-      })
-      .catch(error => {
-        if (error.response && error.response.status === 404) {
-          // BUG
-          notFound();
-        } else {
-          console.error('获取数据时出错:', error.message);
-        }
-      })
-  }, [userId])
+    dispatch(fetchUserFavoriteSongs(userId))
+  }, [dispatch, userId])
 
   return <div>
     您喜欢的音乐
-    <Songlist songs={songs}/>
+    <Songlist songs={favoriteSongs}/>
   </div>
 }
 

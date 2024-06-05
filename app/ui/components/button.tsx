@@ -2,17 +2,20 @@ import React from 'react';
 import {useSelector} from "@/lib/redux/store";
 import {selectCurrentTheme} from "@/lib/redux/slices";
 import styled from "styled-components";
+import {Property} from "csstype";
 
 interface buttonProps {
   onClick?: () => void,
   primary?: boolean,
+  error?: boolean,
   children?: React.ReactNode,
   className?: string,
-  type?: "submit" | "reset" | "button"
+  type?: "submit" | "reset" | "button",
+  isDisabled?: boolean,
+  weight?: Property.FontWeight
 }
 
 const ButtonBase = styled.button`
-    font-weight: bold;
     width: 5rem;
     white-space: nowrap;
     height: 2.25rem;
@@ -38,18 +41,24 @@ const UnPrimaryButton = styled(ButtonBase)`
     }
 `
 
-const Button: React.FC<buttonProps> = ({onClick, primary, children, className, type}) => {
+const Button: React.FC<buttonProps> = ({onClick, weight, error, isDisabled, primary, children, className, type}) => {
   const currentTheme = useSelector(selectCurrentTheme)
   const style = primary ? "text-white border-none bg-default-800 hover:bg-default-500" :
     "text-black border-gray-300 border-solid border-2 hover:text-default-800 hover:border-default-800"
   //className={`${className} ${style} w-20 whitespace-nowrap h-9 transition-colors duration-100 ease-in rounded-lg`
   return (
     <div className={className}>
-      {primary ? <PrimaryButton color={currentTheme.config.primary} onClick={onClick} type={type ? type : 'button'}>
-        {children}
-      </PrimaryButton> : <UnPrimaryButton color={currentTheme.config.primary} onClick={onClick} type={type ? type : 'button'}>
-        {children}
-      </UnPrimaryButton>}
+      {primary ?
+        <PrimaryButton color={error ? '#F00' : currentTheme.config.primary} disabled={isDisabled} style={{fontWeight: weight||'bold'}}
+                       className={isDisabled ? 'cursor-not-allowed' : ''}
+                       onClick={onClick} type={type ? type : 'button'}>
+          {children}
+        </PrimaryButton> :
+        <UnPrimaryButton color={error ? '#F00' : currentTheme.config.primary} disabled={isDisabled} style={{fontWeight: weight}}
+                         className={isDisabled ? 'cursor-not-allowed' : ''}
+                         onClick={onClick} type={type ? type : 'button'}>
+          {children}
+        </UnPrimaryButton>}
     </div>
   );
 }

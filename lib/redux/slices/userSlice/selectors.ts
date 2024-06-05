@@ -20,6 +20,10 @@ export const selectCreatePlaylist = (state: ReduxState) => {
   return state.user.createPlaylist
 }
 
+export const selectFavoriteSongs = (state: ReduxState) => {
+  return state.user.favoriteSongs
+}
+
 export const selectUserId = (state: ReduxState) => {
   return state.user.id
 }

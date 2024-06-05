@@ -1,7 +1,7 @@
 'use client'
 import React, {useEffect, useState} from 'react';
 import Image from "next/image";
-import {ThemeSwitch} from "@/app/ui/layout/top/theme-switch";
+import {ThemeSelector} from "@/app/ui/layout/top/theme-selector";
 import {useDispatch, useSelector} from "@/lib/redux/store";
 import {
   selectIsLogin,
@@ -11,7 +11,6 @@ import {
   selectUserDisplayName
 } from "@/lib/redux/slices/userSlice/selectors";
 import {
-  Button,
   FormControl,
   Input,
   Modal,
@@ -27,13 +26,21 @@ import {
   useDisclosure,
   useToast
 } from "@chakra-ui/react";
-import {LoginStatus, loginUser, logoutUser, setStatus, SignupStatus, signupUser} from "@/lib/redux/slices";
+import {
+  LoginStatus,
+  logoutUser,
+  selectCurrentTheme,
+  setStatus,
+  SignupStatus,
+} from "@/lib/redux/slices";
 import More from "@/app/ui/layout/top/more";
+import Button from "@/app/ui/components/button";
+import {loginUser, signupUser} from "@/lib/redux/slices/userSlice/chunk";
 
 function TopBarCustomer() {
   return (
     <div className="flex w-80 justify-around items-center">
-      <ThemeSwitch/>
+      <ThemeSelector/>
       <UserLogin/>
       {/*<Donate/>*/}
       <More/>
@@ -55,6 +62,7 @@ function UserLogin() {
 
   const toast = useToast()
   const toastId = "qianling"
+  const currentTheme = useSelector(selectCurrentTheme)
 
   const [invalid, setInvalid] = useState<boolean>(false)
   const [loginPage, setLoginPage] = useState<boolean>(true)
@@ -205,6 +213,7 @@ function UserLogin() {
           {!loginPage && <FormControl mt={4}>
             <div className="font-bold mb-3">昵称</div>
             <Input placeholder='请输入昵称' type={"text"} className="mb-3" value={nickname}
+                   focusBorderColor={currentTheme.config.primary}
                    onChange={(e) => {
                      setNickname(e.target.value)
                    }}/>
@@ -224,6 +233,7 @@ function UserLogin() {
                 </div>
               </div>}
             <Input ref={initialRef} placeholder='请输入用户名或邮箱' value={username} type={"text"} isInvalid={invalid}
+                   focusBorderColor={currentTheme.config.primary}
                    onChange={e => {
                      setUsername(e.target.value)
                      setPasswordInvalid(false)
@@ -246,6 +256,7 @@ function UserLogin() {
               </div>
             </div>
             <Input placeholder='请输入密码' value={password} type={"password"} isInvalid={passwordInvalid}
+                   focusBorderColor={currentTheme.config.primary}
                    onChange={e => {
                      setPassword(e.target.value)
                      setPasswordInvalid(false)
@@ -254,7 +265,8 @@ function UserLogin() {
         </ModalBody>
 
         <div className="flex justify-between items-center mx-2 mb-3 px-4 py-2">
-          <Button onClick={() => {
+          <Button primary
+            onClick={() => {
             if (loginPage) {
               setSignupWay(true)
               setRememberState(true)
@@ -263,8 +275,8 @@ function UserLogin() {
             setLoginPage(state => !state)
           }} className="">{loginPage ? "注册" : "登录"}</Button>
 
-          <div>
-            <Button colorScheme='blue' mr={3} onClick={loginPage ? login : signup}
+          <div className='flex flex-row'>
+            <Button onClick={loginPage ? login : signup} primary className="mr-5"
                     isDisabled={username === '' || password === '' || invalid || !loginPage && nickname === ''}>
               {loginPage ? "登录" : "注册"}
             </Button>

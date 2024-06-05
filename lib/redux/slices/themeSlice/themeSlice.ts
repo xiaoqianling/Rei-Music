@@ -1,7 +1,7 @@
 import {createSlice, PayloadAction} from "@reduxjs/toolkit";
 import {Theme, themeList} from "@/lib/types/theme";
 
-const initialState : Theme = themeList.find(theme => theme.value === 'white')!
+const initialState : Theme = themeList.find(theme => theme.value === 'default')!
 
 export const themeSlice = createSlice({
   name: 'audio',
