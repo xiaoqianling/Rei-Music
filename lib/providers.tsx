@@ -9,9 +9,9 @@ import Layout from "@/app/ui/layouts";
 export const Providers = ({children}:{children:React.ReactNode}) => {
   return <Provider store={reduxStore}>
     <ChakraProvider>
-      <Layout>
-        {children}
-      </Layout>
+        <Layout>
+          {children}
+        </Layout>
     </ChakraProvider>
   </Provider>
 }

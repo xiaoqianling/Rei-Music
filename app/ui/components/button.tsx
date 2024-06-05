@@ -12,6 +12,7 @@ interface buttonProps {
 }
 
 const ButtonBase = styled.button`
+    font-weight: bold;
     width: 5rem;
     white-space: nowrap;
     height: 2.25rem;
@@ -25,7 +26,6 @@ const PrimaryButton = styled(ButtonBase)`
     color: white;
     border: none;
     background-color: ${props => props.color};
-    // hover
 `
 
 const UnPrimaryButton = styled(ButtonBase)`
@@ -44,13 +44,13 @@ const Button: React.FC<buttonProps> = ({onClick, primary, children, className, t
     "text-black border-gray-300 border-solid border-2 hover:text-default-800 hover:border-default-800"
   //className={`${className} ${style} w-20 whitespace-nowrap h-9 transition-colors duration-100 ease-in rounded-lg`
   return (
-    <>
+    <div className={className}>
       {primary ? <PrimaryButton color={currentTheme.config.primary} onClick={onClick} type={type ? type : 'button'}>
         {children}
       </PrimaryButton> : <UnPrimaryButton color={currentTheme.config.primary} onClick={onClick} type={type ? type : 'button'}>
         {children}
       </UnPrimaryButton>}
-    </>
+    </div>
   );
 }
 

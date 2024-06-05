@@ -33,7 +33,7 @@ const initialState: User = {
   login: false,
   status: LoginStatus.Null,
   signupStatus: SignupStatus.Null,
-  displayName: '测试账号',
+  displayName: '未登录用户',
   id: -1,
   createPlaylist: [],
   password: ''
@@ -65,7 +65,7 @@ export const loginUser = createAsyncThunk(
         )
       }
       if (response.status === 200) {
-        dispatch(fetchUserInfo(response.data.id));
+        dispatch(fetchUserCreatePlaylist(response.data.id));
         return response.data;
       } else {
         return rejectWithValue('登录失败');
@@ -120,10 +120,10 @@ export const signupUser = createAsyncThunk(
   }
 )
 
-// 创建一个用于获取用户信息的异步 Thunk action
-export const fetchUserInfo = createAsyncThunk(
+// 创建一个用于获取用户创建歌单
+export const fetchUserCreatePlaylist = createAsyncThunk(
   'user/fetchUserCreatePlaylist',
-  async (userId: string, {rejectWithValue}) => {
+  async (userId: number, {rejectWithValue}) => {
     try {
       const response = await axios.get(serverUrl + '/user/createPlaylist?uid=' + userId);
       if (response.status === 200) {
@@ -136,6 +136,27 @@ export const fetchUserInfo = createAsyncThunk(
     }
   }
 );
+
+// 创建歌单
+export const createPlaylist = createAsyncThunk(
+  'user/createPlaylist',
+  async ({userId, name}: { userId: number, name: string }, {rejectWithValue, dispatch, fulfillWithValue}) => {
+    try {
+      const response = await axios.post(serverUrl + '/user/createPlaylist', {
+        uid: userId,
+        playlistName: name
+      });
+      if (response.status === 200) {
+        dispatch(fetchUserCreatePlaylist(userId))
+        return response.data;
+      } else {
+        return rejectWithValue('创建歌单完成');
+      }
+    } catch (error) {
+      return rejectWithValue('创建歌单失败');
+    }
+  }
+)
 
 export const userSlice = createSlice({
   name: 'user',
@@ -150,12 +171,9 @@ export const userSlice = createSlice({
     logoutUser: (state) => {
       state.displayName = '测试账号'
       state.login = false;
-      // state.username = '';
-      // state.id = -1
-      // state.createPlaylist = []
-      // state.password = ''
-      // state.status = LoginStatus.Null;
-      // state.signupStatus = SignupStatus.Null;
+    },
+    createPlaylist: (state, action: PayloadAction<string>) => {
+
     }
   },
   extraReducers: (builder) => {
@@ -193,9 +211,12 @@ export const userSlice = createSlice({
           state.signupStatus = SignupStatus.Unknown
       })
       // 在用户登陆后 查询歌单信息
-      .addCase(fetchUserInfo.fulfilled, (state, action) => {
+      .addCase(fetchUserCreatePlaylist.fulfilled, (state, action) => {
         state.createPlaylist = action.payload;
-      });
+      })
+      .addCase(createPlaylist.fulfilled, (state, action) => {
+
+      })
   }
 });
 

@@ -4,18 +4,15 @@ import NaviItem, {LinkWrapHover} from "@/app/ui/navi-item";
 import {MusicList, Recommend} from "@/app/ui/components/icons/homeIcons";
 import {useSelector} from "@/lib/redux/store";
 import {selectCreatePlaylist, selectCurrentTheme, selectIsLogin} from "@/lib/redux/slices";
-import {Divider} from "@chakra-ui/react";
+import {Divider, useDisclosure} from "@chakra-ui/react";
 import Link from "next/link";
+import CreatePlaylistModal from "@/app/ui/layout/nav/CreatePlaylistModal";
 
 
 export function SideNav() {
   const isLogin = useSelector(selectIsLogin)
   const createdPlaylist = useSelector(selectCreatePlaylist)
   const currentTheme = useSelector(selectCurrentTheme)
-
-  const createPlaylist = () => {
-
-  }
 
   return (
     <div className="px-6">
@@ -38,14 +35,7 @@ export function SideNav() {
           </LinkWrapHover>
           {createdPlaylist.map(p => <NaviItem key={p.playlistId} title={p.playlistName}
                                               url={'/playlist/' + p.playlistId}/>)}
-          {/*todo 展示模态框*/}
-          <LinkWrapHover color={currentTheme.config.hover} onClick={createPlaylist}>
-            <Link className="flex items-center "
-                  href={'#'}>
-              <span>+</span>
-              <span>创建歌单</span>
-            </Link>
-          </LinkWrapHover>
+          <CreatePlaylistModal/>
         </div>}
     </div>
   );
