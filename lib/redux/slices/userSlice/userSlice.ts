@@ -143,8 +143,8 @@ export const createPlaylist = createAsyncThunk(
   async ({userId, name}: { userId: number, name: string }, {rejectWithValue, dispatch, fulfillWithValue}) => {
     try {
       const response = await axios.post(serverUrl + '/user/createPlaylist', {
-        uid: userId,
-        playlistName: name
+        'uid': userId,
+        'playlistName': name
       });
       if (response.status === 200) {
         dispatch(fetchUserCreatePlaylist(userId))
