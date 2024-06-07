@@ -72,7 +72,8 @@ const Page: React.FC = () => {
       setFileInvalid(true)
       return
     }
-    if (!(file.type.includes('ogg') || file.type.includes('mp3') || file.type.includes('flac'))) {
+    if (!(file.type.includes('ogg') || file.type.includes('mpeg') || file.type.includes('flac'))) {
+      console.log(file.type)
       setFileFormatInvalid(true)
       invalid = true
     }
