@@ -5,7 +5,6 @@ import {serverUrl} from "@/lib/api/music-api";
 import {notFound} from "next/navigation";
 import {Playlist, Song} from "@/lib/types/songs";
 import Songlist from "@/app/ui/components/list/Songlist";
-import {Card} from "@/app/ui/components/card";
 import PlaylistCardList from "@/app/ui/components/list/playlistCardList";
 
 // 搜索结果页面
@@ -57,18 +56,6 @@ function Page({params}: { params: { keyword: string } }) {
           <PlaylistCardList playlist={playlist}/>
         </>
       }
-
-      <div className={"grid xl:grid-cols-5 lg:grid-cols-4 md:grid-cols-3 py-2 gap-y-4 gap-x-4 sm:grid-cols-2"}>
-        <Card description={'描述'} playlistId={1}/>
-        <Card description={'描述'} playlistId={1}/>
-        <Card description={'描述'} playlistId={1}/>
-        <Card description={'描述'} playlistId={1}/>
-        <Card description={'描述'} playlistId={1}/>
-        <Card description={'描述'} playlistId={1}/>
-        <Card description={'描述'} playlistId={1}/>
-        <Card description={'描述'} playlistId={1}/>
-      </div>
-
     </div>
 
   )
