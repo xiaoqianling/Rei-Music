@@ -133,7 +133,7 @@ const Page: React.FC = () => {
       setFileInvalid(true)
       return
     } else setFileInvalid(false)
-    if (!(files[0].type.includes('ogg') || files[0].type.includes('mp3') || files[0].type.includes('flac'))) {
+    if (!(files[0].type.includes('ogg') || files[0].type.includes('mpeg') || files[0].type.includes('flac'))) {
       setFileFormatInvalid(true)
       return
     } else setFileFormatInvalid(false)
