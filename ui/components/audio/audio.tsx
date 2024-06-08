@@ -37,13 +37,14 @@ function Audio() {
       animationRef.current = requestAnimationFrame(updateTime);
     };
     let sound: Howl | undefined = undefined
-    if (songInfo !== undefined && playCondition) {
+    // add playCondition to avoid warning
+    if (songInfo !== undefined) {
       // 满足条件 开始播放
       let songSrc: string = serverUrl+'/song/id/'+songInfo.id
       sound = new Howl({
         src: songSrc,
         // 通过音频流播放
-        format: ['ogg', 'mp3'],
+        format: ['ogg', 'mp3', 'flac'],
         onplay: () => {
           dispatch(play())
           animationRef.current = requestAnimationFrame(updateTime)
@@ -59,6 +60,7 @@ function Audio() {
         },
         onload: () => {
           // 歌曲加载完成后将歌曲信息存入redux
+          console.log('onload')
           dispatch(setSongDuration(sound?.duration() ?? 0))
           // 若直接点击播放按钮 则开始播放
           sound && audioInit(sound)
@@ -103,7 +105,6 @@ function Audio() {
 
   //  右键显示操作
   return (
-    // bg-default-300
     <div className={"flex flex-col h-full w-full"}>
       <AudioSlider audio={audioRef.current}/>
       <div className={"w-full flex flex-grow-[1] items-center justify-between py-0 px-10"}>
