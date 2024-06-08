@@ -4,7 +4,7 @@ import {Provider} from 'react-redux'
 import {reduxStore} from "@/lib/redux/store";
 import React from "react";
 import {ChakraProvider} from "@chakra-ui/react";
-import Layout from "@/app/ui/layouts";
+import Layout from "@/ui/layouts";
 
 export const Providers = ({children}:{children:React.ReactNode}) => {
   return <Provider store={reduxStore}>

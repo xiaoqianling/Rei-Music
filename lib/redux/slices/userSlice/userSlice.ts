@@ -36,7 +36,7 @@ export interface LoginInfo {
 
 const initialState: User = {
   username: '',
-  login: false,
+  login: true,
   status: LoginStatus.Null,
   signupStatus: SignupStatus.Null,
   displayName: '未登录用户',
@@ -81,7 +81,6 @@ export const userSlice = createSlice({
       })
       // 注册逻辑
       .addCase(signupUser.fulfilled, (state, action) => {
-        console.log(action.payload)
         state.login = true;
         state.signupStatus = SignupStatus.OK
         state.id = action.payload.id

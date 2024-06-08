@@ -1,12 +1,12 @@
 import {createAsyncThunk} from "@reduxjs/toolkit";
-import {LoginInfo} from "@/lib/redux/slices";
+import {fetchMetadata, LoginInfo} from "@/lib/redux/slices";
 import axios from "axios";
 import {serverUrl} from "@/lib/api/music-api";
 
 // 登录
 export const loginUser = createAsyncThunk(
   'user/loginUser',
-  async (loginInfo: LoginInfo, {rejectWithValue, dispatch}) => {
+  async (loginInfo: LoginInfo, {rejectWithValue, dispatch, fulfillWithValue}) => {
     try {
       let response;
       // 用邮箱还是用用户名登录
@@ -30,10 +30,12 @@ export const loginUser = createAsyncThunk(
       if (response.status === 200) {
         dispatch(fetchUserCreatePlaylist(response.data.id))
         dispatch(fetchUserFavoriteSongs(response.data.id))
-        return response.data
+        return fulfillWithValue(response.data)
       } else {
+        return rejectWithValue("error")
       }
     } catch (error) {
+      return rejectWithValue("error")
     }
   }
 )
@@ -117,6 +119,79 @@ export const fetchUserFavoriteSongs = createAsyncThunk(
   }
 )
 
+// 上传音乐
+export const uploadMusic = createAsyncThunk(
+  'user/uploadMusic',
+  async (formData: FormData, {rejectWithValue, dispatch}) => {
+    try {
+      const response = await axios.post(serverUrl + "/Song/upload", formData,
+        {headers: {"Content-Type": "multipart/form-data"}})
+      if (response.status === 200) {
+        dispatch(fetchMetadata())
+        return response.data
+      } else {
+        return rejectWithValue('上传音乐失败');
+      }
+    } catch (error) {
+      return rejectWithValue('上传音乐失败');
+    }
+  }
+)
+export const uploadMusicToPlaylist = createAsyncThunk(
+  'user/uploadMusic',
+  async (formData: FormData, {rejectWithValue, dispatch}) => {
+    try {
+      const response = await axios.post(serverUrl + "/Song/uploadToPlaylist", formData,
+        {headers: {"Content-Type": "multipart/form-data"}})
+      if (response.status === 200) {
+        dispatch(fetchMetadata())
+        return response.data
+      } else {
+        return rejectWithValue('上传音乐失败');
+      }
+    } catch (error) {
+      return rejectWithValue('上传音乐失败');
+    }
+  }
+)
+
+// 添加音乐到歌单
+export const addMusicToPlaylist = createAsyncThunk(
+  'user/addMusicToPlaylist',
+  async ({sid, pid}: { sid: number, pid: number }, {rejectWithValue, dispatch}) => {
+    try {
+      const formData = new FormData();
+      formData.append('sid', sid.toString())
+      formData.append('pid', pid.toString())
+      const response = await axios.put(serverUrl + "/Song/putSongToPlaylist",formData)
+      if (response.status === 200) {
+        return response.data
+      } else {
+        return rejectWithValue('添加音乐到歌单失败');
+      }
+    } catch (error) {
+      return rejectWithValue('添加音乐到歌单失败');
+    }
+  }
+)
+
+// 从歌单移除音乐
+export const deleteMusicFromPlaylist = createAsyncThunk(
+  'user/deleteMusicFromPlaylist',
+  async ({sid, pid}: { sid: number, pid: number }, {rejectWithValue, dispatch}) => {
+    try {
+      const response = await axios.delete(serverUrl + "/Song/deleteSongFromPlaylist?sid=" + sid + "&pid=" + pid)
+      if (response.status === 200) {
+        return response.data
+      } else {
+        return rejectWithValue('从歌单删除音乐失败');
+      }
+    } catch (error) {
+      return rejectWithValue('从歌单删除音乐失败');
+    }
+  }
+)
+
 // 创建歌单
 export const createPlaylist = createAsyncThunk(
   'user/createPlaylist',
@@ -134,6 +209,24 @@ export const createPlaylist = createAsyncThunk(
       }
     } catch (error) {
       return rejectWithValue('创建歌单失败');
+    }
+  }
+)
+
+// 删除歌单
+export const deletePlaylist = createAsyncThunk(
+  'user/deletePlaylist',
+  async ({uid, pid}: { uid: number, pid: number }, {rejectWithValue, dispatch, fulfillWithValue}) => {
+    try {
+      const response = await axios.delete(serverUrl + '/user/deletePlaylist?playlistId=' + pid);
+      if (response.status === 200) {
+        dispatch(fetchUserCreatePlaylist(uid))
+        return response.data;
+      } else {
+        return rejectWithValue('删除歌单完成');
+      }
+    } catch (error) {
+      return rejectWithValue('删除歌单失败');
     }
   }
 )

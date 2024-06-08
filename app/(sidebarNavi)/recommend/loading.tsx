@@ -1,5 +1,5 @@
 import React from 'react';
-import Skeleton from "@/app/ui/components/skeleton";
+import Skeleton from "@/ui/components/skeleton";
 
 function Loading() {
   return (

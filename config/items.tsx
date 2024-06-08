@@ -1,6 +1,6 @@
 import React from "react";
 import Link from "next/link";
-import {Clock, Computer, Like, Music, MusicList, Radar, Recommend, Video} from "@/app/ui/components/icons/homeIcons";
+import {Clock, Computer, Like, Music, MusicList, Radar, Recommend, Video} from "@/ui/components/icons/homeIcons";
 
 // 侧边栏导航
 
