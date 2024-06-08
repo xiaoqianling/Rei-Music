@@ -36,7 +36,7 @@ export interface LoginInfo {
 
 const initialState: User = {
   username: '',
-  login: false,
+  login: true,
   status: LoginStatus.Null,
   signupStatus: SignupStatus.Null,
   displayName: '未登录用户',
