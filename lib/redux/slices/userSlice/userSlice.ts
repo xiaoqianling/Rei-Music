@@ -81,7 +81,6 @@ export const userSlice = createSlice({
       })
       // 注册逻辑
       .addCase(signupUser.fulfilled, (state, action) => {
-        console.log(action.payload)
         state.login = true;
         state.signupStatus = SignupStatus.OK
         state.id = action.payload.id

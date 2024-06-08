@@ -1,4 +1,4 @@
-import About from "@/app/ui/home/about";
+import About from "@/ui/home/about";
 
 function Page() {
   return <>

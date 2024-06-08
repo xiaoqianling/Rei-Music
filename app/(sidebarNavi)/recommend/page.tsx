@@ -3,9 +3,9 @@ import React, {useEffect, useState} from 'react';
 import axios from "axios";
 import {serverUrl} from "@/lib/api/music-api";
 import {Playlist} from "@/lib/types/songs";
-import PlaylistCardList from "@/app/ui/components/list/playlistCardList";
 import {useSelector} from "@/lib/redux/store";
 import {selectUserDisplayName} from "@/lib/redux/slices";
+import PlaylistCardList from "@/ui/components/list/playlistCardList";
 
 function Page() {
   const [playlistData, setPlaylistData] = useState<Playlist[]>([]);

@@ -1,13 +1,14 @@
 'use client'
 import React, {useEffect, useState} from 'react';
 import {useDispatch, useSelector} from "@/lib/redux/store";
-import Button from "@/app/ui/components/button";
 import axios from "axios";
-import {fetchMetadata, selectCurrentTheme, selectIsLogin, selectUserId} from "@/lib/redux/slices";
+import {selectCurrentTheme, selectIsLogin, selectUserId} from "@/lib/redux/slices";
 import {serverUrl} from "@/lib/api/music-api";
 import {FormControl, FormErrorMessage, FormHelperText, FormLabel, Input, Select} from "@chakra-ui/react";
-import UploadButton from "@/app/ui/upload/upload-button";
 import {Playlist} from "@/lib/types/songs";
+import {uploadMusic, uploadMusicToPlaylist} from "@/lib/redux/slices/userSlice/chunk";
+import UploadButton from "@/ui/upload/upload-button";
+import Button from "@/ui/components/button";
 
 
 const Page: React.FC = () => {
@@ -39,7 +40,6 @@ const Page: React.FC = () => {
       axios.get(serverUrl + '/User/getCreatePlaylist?uid=' + userId)
         .then(response => {
           setCreatePlaylist(response.data)
-          console.log(response.data)
         })
         .catch(error => {
           if (error.response && error.response.status === 404) {
@@ -86,20 +86,9 @@ const Page: React.FC = () => {
     uploadToPlaylistId !== 0 && formData.append('pid', uploadToPlaylistId.toString())
     composer && formData.append('composer', composer);
     file && formData.append('file', file)
-    console.log(formData)
-    const url = uploadToPlaylistId !== 0 ? serverUrl + '/Song/uploadToPlaylist' : serverUrl + "/Song/upload"
-    axios.post(url, formData,
-      {headers: {"Content-Type": "multipart/form-data"}})
-      .then(response => response.data)
-      .then(data => {
-        if (data.code === 200) {
-          dispatch(fetchMetadata());
-        }
-        console.log("response:", data)
-      })
-      .catch(error => {
-        console.error(error);
-      });
+    if (uploadToPlaylistId !== 0)
+      dispatch(uploadMusicToPlaylist(formData))
+    else dispatch(uploadMusic(formData))
   }
 
   // todo添加弹框

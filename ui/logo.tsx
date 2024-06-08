@@ -1,0 +1,24 @@
+import React from 'react';
+import {usePathname, useRouter} from "next/navigation";
+import {Icon} from "@/ui/components/icons/homeIcons";
+
+function Logo() {
+
+  const router = useRouter();
+  const pathname = usePathname();
+  const handleBackHome = () => {
+    if (pathname !== '/') {
+      console.log('返回主页')
+      router.push('/')
+    }
+  }
+
+  return (
+    <div className={"w-72 py-3 ml-3 flex items-center font-bold text-xl cursor-pointer"} onClick={handleBackHome}>
+      <Icon size={40}/>
+      <span className="md:text-2xl">Rei Music</span>
+    </div>
+  );
+}
+
+export default Logo;

@@ -1,9 +1,9 @@
 'use client'
 import React, {useEffect} from 'react';
-import Songlist from "@/app/ui/components/list/Songlist";
 import {useDispatch, useSelector} from "@/lib/redux/store";
 import {selectFavoriteSongs, selectUserId} from "@/lib/redux/slices";
 import {fetchUserFavoriteSongs} from "@/lib/redux/slices/userSlice/chunk";
+import Songlist from "@/ui/components/list/Songlist";
 
 // 收藏音乐
 function Page() {
