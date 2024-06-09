@@ -40,7 +40,8 @@ function Audio() {
     // add playCondition to avoid warning
     if (songInfo !== undefined) {
       // 满足条件 开始播放
-      let songSrc: string = serverUrl+'/song/id/'+songInfo.id
+      // let songSrc: string = serverUrl+'/song/id/'+songInfo.id
+      let songSrc: string = serverUrl+'/song/download/'+songInfo.id
       sound = new Howl({
         src: songSrc,
         // 通过音频流播放
