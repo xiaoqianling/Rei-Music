@@ -37,14 +37,16 @@ function Audio() {
       animationRef.current = requestAnimationFrame(updateTime);
     };
     let sound: Howl | undefined = undefined
-    // add playCondition to avoid warning
+    // 添加播放条件避免浏览器警告
     if (songInfo !== undefined) {
       // 满足条件 开始播放
-      let songSrc: string = serverUrl+'/song/id/'+songInfo.id
+      // let songSrc: string = serverUrl+'/song/id/'+songInfo.id
+      let songSrc: string = serverUrl+'/song/download/'+songInfo.id
       sound = new Howl({
         src: songSrc,
         // 通过音频流播放
         format: ['ogg', 'mp3', 'flac'],
+        preload: true,
         onplay: () => {
           dispatch(play())
           animationRef.current = requestAnimationFrame(updateTime)
