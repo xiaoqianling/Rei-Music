@@ -44,7 +44,7 @@ function Page({params}: { params: { keyword: string } }) {
 
   return (
     <div>
-      <h3 className={"mb-3 text-xl font-bold"}>搜索：{params.keyword}</h3>
+      <h3 className={"mb-3 text-xl font-bold"}>搜索：{decodeURI(params.keyword)}</h3>
       {songs.length === 0 ? <h3 className={"mb-3 text-xl font-bold"}>未搜索到相关音乐</h3> :
         <>
           <h3 className={"mb-3 text-lg"}>搜索到的音乐</h3>
