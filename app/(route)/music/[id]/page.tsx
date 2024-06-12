@@ -48,7 +48,7 @@ function Page({params}: { params: { id: number } }) {
         <Image className="rounded-xl h-full object-cover" src={avatar} alt='假装封面'/>
       </div>
       <div>
-        歌词？还没做啊
+        歌词待实现
       </div>
     </div>
     <Divider/>
@@ -58,7 +58,24 @@ function Page({params}: { params: { id: number } }) {
         <Heading size='md'>Comments</Heading>
       </CardHeader>
       <CardBody>
-        <Stack divider={<StackDivider />} spacing='4'>
+        <Stack divider={<StackDivider/>} spacing='4'>
+          <Box>
+            <Heading size=''>
+              用户名称
+            </Heading>
+            <Text pt='2'>
+              评论内容
+            </Text>
+          </Box>
+          {song?.name === '兰亭序' &&
+            <Box>
+              <Heading size=''>
+                Rei music
+              </Heading>
+              <Text pt='2'>
+                兰亭序很好听啊
+              </Text>
+            </Box>}
           {comments.map(c =>
             <Box key={c.commentId}>
               <Heading size=''>
@@ -72,13 +89,13 @@ function Page({params}: { params: { id: number } }) {
       </CardBody>
     </Card>
 
-    <h1 className={"mb-4 text-2xl font-bold"}>Comments</h1>
+    {/*<h1 className={"mb-4 text-2xl font-bold"}>Comments</h1>
     <div>
       {comments.map(c =>
         <div key={c.commentId}>
           {c.userDisplayName} : {c.content}
         </div>)}
-    </div>
+    </div>*/}
   </div>
 }
 
